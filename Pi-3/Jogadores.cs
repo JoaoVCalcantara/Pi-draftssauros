@@ -17,6 +17,9 @@ namespace Pi_3
         {
             try
             {
+                // Garantir que a caixa de senha esteja limpa ao abrir o formulário
+                txtSenha?.Clear();
+
                 // Preenche o combo com as partidas disponíveis ao abrir o formulário
                 string retorno = Jogo.ListarPartidas("T"); // ajustar filtro se necessário
                 if (string.IsNullOrWhiteSpace(retorno) || retorno.StartsWith("ERRO", StringComparison.OrdinalIgnoreCase))
@@ -24,7 +27,7 @@ namespace Pi_3
                     // opcional: mostrar mensagem ou log
                     return;
                 }
-
+                
                 retorno = retorno.Replace("\r", "");
                 var partidas = retorno
                     .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)

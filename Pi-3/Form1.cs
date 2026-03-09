@@ -34,7 +34,7 @@ namespace Pi_3
                 string[] partidas = retorno.Split('\n');
 
                 listBox1.Items.Clear();
-                for (int i = 0; i< partidas.Length -1; i++)
+                for (int i = 0; i< partidas.Length ; i++)
                 {
                     listBox1.Items.Add(partidas[i]);
                 }
@@ -53,47 +53,73 @@ namespace Pi_3
         {
             try
             {
-                string partida = listBox1.SelectedItem.ToString();
-                string[] dadosPartida = partida.Split(',');
+                var selected = listBox1.SelectedItem;
+                if (selected == null)
+                {
+                    // Nada selecionado
+                    return;
+                }
 
-                int idPartida = Convert.ToInt32(dadosPartida[0]);
-                string nomePartida = dadosPartida[1];
-                string data = dadosPartida[2];
+                string partida = selected.ToString();
+                if (string.IsNullOrWhiteSpace(partida))
+                {
+                    return;
+                }
+
+                string[] dadosPartida = partida.Split(',');
+                if (dadosPartida.Length < 3)
+                {
+                    MessageBox.Show("Formato de partida inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(dadosPartida[0], out int idPartida))
+                {
+                    MessageBox.Show("ID da partida inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string nomePartida = dadosPartida[1].Trim();
+                string data = dadosPartida[2].Trim();
 
                 label1.Text = idPartida.ToString();
                 label2.Text = nomePartida;
                 label3.Text = data;
 
                 string retorno = Jogo.ListarJogadores(idPartida);
-                if (retorno.Substring(0, 4) == "ERRO")
+
+                if (string.IsNullOrEmpty(retorno))
                 {
-                    MessageBox.Show("Deu erro bixu, dont tem partidas disponiveis \n" + retorno, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-
+                    listBox2.Items.Clear();
+                    MessageBox.Show("Nenhum jogador registrado para esta partida.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                else
-                {
-                    retorno = retorno.Replace("\r", "");
-                    string[] jogadore = retorno.Split('\n');
 
-                    listBox2.Items.Clear();
-                    for (int i = 0; i < jogadore.Length ; i++)
-                    {
-                        listBox2.Items.Add(jogadore[i]);
-                    }
+                retorno = retorno.Replace("\r", "");
+
+                // Verifica se a resposta indica erro
+                if (retorno.Length >= 4 && retorno.StartsWith("ERRO", StringComparison.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show("Deu erro bixu, não tem partidas disponíveis \n" + retorno, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
+                // Quebra em linhas e elimina entradas vazias
+                string[] jogadores = retorno.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
+                listBox2.Items.Clear();
+                foreach (var j in jogadores)
+                {
+                    var item = j?.Trim();
+                    if (!string.IsNullOrEmpty(item))
+                        listBox2.Items.Add(item);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("PARA DE CLICAR VARIAS VEZES", "ANIMAL",MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                throw;
-
+                // Evita relançar a exceção e informa o usuário
+                MessageBox.Show("Ocorreu um erro ao carregar jogadores: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -105,20 +131,17 @@ namespace Pi_3
         {
             try
             {
-                 string retorno = Jogo.CriarPartida("P", "2024-06-20", "Jurássicos");
-                
-                if (retorno.Contains("ERRO"))
-                {
-                    MessageBox.Show(retorno, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                MessageBox.Show("Partida criada com sucesso, contendo o numero: " + retorno,"Pi 3", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                var partidaForm = new Partida();
+                partidaForm.StartPosition = FormStartPosition.CenterParent;
+                // Use ShowDialog(this) para modal com owner; se preferir não-modal troque para Show().
+                partidaForm.ShowDialog(this);
+                partidaForm.Dispose();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show("Erro ao abrir o formulário Jogadores: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         private void btnJogadores_Click(object sender, EventArgs e)
