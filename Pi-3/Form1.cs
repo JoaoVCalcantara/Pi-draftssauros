@@ -106,7 +106,7 @@ namespace Pi_3
             try
             {
                  string retorno = Jogo.CriarPartida("P", "2024-06-20", "Jurássicos");
-                string retorno2 = Jogo.Entrar(2018, "Joao123", "2024-06-20");
+                
                 if (retorno.Contains("ERRO"))
                 {
                     MessageBox.Show(retorno, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -119,6 +119,22 @@ namespace Pi_3
                 throw;
             }
             
+        }
+
+        private void btnJogadores_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var jogadoresForm = new Jogadores();
+                jogadoresForm.StartPosition = FormStartPosition.CenterParent;
+                // Use ShowDialog(this) para modal com owner; se preferir não-modal troque para Show().
+                jogadoresForm.ShowDialog(this);
+                jogadoresForm.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao abrir o formulário Jogadores: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

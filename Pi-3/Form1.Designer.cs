@@ -38,6 +38,7 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_criar_partida = new System.Windows.Forms.Button();
+            this.btnJogadores = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_Test
@@ -130,11 +131,22 @@
             this.btn_criar_partida.UseVisualStyleBackColor = true;
             this.btn_criar_partida.Click += new System.EventHandler(this.btn_criar_partida_Click);
             // 
+            // btnJogadores
+            // 
+            this.btnJogadores.Location = new System.Drawing.Point(301, 12);
+            this.btnJogadores.Name = "btnJogadores";
+            this.btnJogadores.Size = new System.Drawing.Size(137, 33);
+            this.btnJogadores.TabIndex = 10;
+            this.btnJogadores.Text = "Adicionar Jogadores";
+            this.btnJogadores.UseVisualStyleBackColor = true;
+            this.btnJogadores.Click += new System.EventHandler(this.btnJogadores_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnJogadores);
             this.Controls.Add(this.btn_criar_partida);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.listBox2);
@@ -165,6 +177,7 @@
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_criar_partida;
+        private System.Windows.Forms.Button btnJogadores;
     }
 }
 
