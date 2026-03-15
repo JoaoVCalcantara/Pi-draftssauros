@@ -27,10 +27,6 @@ namespace Pi_3
                 string senha = (txtSenha?.Text ?? "").Trim();
                 string grupo = (txtGrupo?.Text ?? "").Trim();
 
-                txtGrupo.Enabled = false;
-                txtGrupo.BackColor = SystemColors.Window;
-                txtGrupo.ForeColor = SystemColors.WindowText;
-
                 if (string.IsNullOrEmpty(nome))
                 {
                     MessageBox.Show("Informe o nome da partida.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
