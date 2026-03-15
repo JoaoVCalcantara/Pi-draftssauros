@@ -24,7 +24,7 @@ namespace Pi_3
             {
                 string nome = (txtPartida?.Text ?? "").Trim();
                 string senha = (txtSenha?.Text ?? "").Trim();
-                string grupo = (txtGrupo?.Text ?? "").Trim();
+                string grupo = (lblGrupo?.Text ?? "").Trim();
 
                 if (string.IsNullOrEmpty(nome))
                 {
@@ -97,11 +97,6 @@ namespace Pi_3
             {
                 if (btnPartida != null) btnPartida.Enabled = true;
             }
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
