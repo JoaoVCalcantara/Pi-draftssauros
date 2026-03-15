@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Pi_3
 {
@@ -24,7 +25,11 @@ namespace Pi_3
             {
                 string nome = (txtPartida?.Text ?? "").Trim();
                 string senha = (txtSenha?.Text ?? "").Trim();
-                string grupo = (lblGrupo?.Text ?? "").Trim();
+                string grupo = (txtGrupo?.Text ?? "").Trim();
+
+                txtGrupo.Enabled = false;
+                txtGrupo.BackColor = SystemColors.Window;
+                txtGrupo.ForeColor = SystemColors.WindowText;
 
                 if (string.IsNullOrEmpty(nome))
                 {
