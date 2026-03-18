@@ -33,8 +33,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtPartida = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
-            this.txtGrupo = new System.Windows.Forms.TextBox();
             this.btnPartida = new System.Windows.Forms.Button();
+            this.txtGrupo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // PartidaNome
@@ -78,14 +78,6 @@
             this.txtSenha.Size = new System.Drawing.Size(100, 20);
             this.txtSenha.TabIndex = 4;
             // 
-            // txtGrupo
-            // 
-            this.txtGrupo.Location = new System.Drawing.Point(249, 66);
-            this.txtGrupo.Name = "txtGrupo";
-            this.txtGrupo.Size = new System.Drawing.Size(100, 20);
-            this.txtGrupo.TabIndex = 5;
-            this.txtGrupo.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
             // btnPartida
             // 
             this.btnPartida.Location = new System.Drawing.Point(335, 141);
@@ -95,6 +87,16 @@
             this.btnPartida.Text = "Criar Partida";
             this.btnPartida.UseVisualStyleBackColor = true;
             this.btnPartida.Click += new System.EventHandler(this.btnPartida_Click);
+            // 
+            // txtGrupo
+            // 
+            this.txtGrupo.BackColor = System.Drawing.SystemColors.Window;
+            this.txtGrupo.Enabled = false;
+            this.txtGrupo.Location = new System.Drawing.Point(249, 66);
+            this.txtGrupo.Name = "txtGrupo";
+            this.txtGrupo.Size = new System.Drawing.Size(100, 20);
+            this.txtGrupo.TabIndex = 5;
+            this.txtGrupo.Text = "Jurássicos";
             // 
             // Partida
             // 
@@ -122,7 +124,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPartida;
         private System.Windows.Forms.TextBox txtSenha;
-        private System.Windows.Forms.TextBox txtGrupo;
         private System.Windows.Forms.Button btnPartida;
+        private System.Windows.Forms.TextBox txtGrupo;
     }
 }
