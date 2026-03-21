@@ -14,38 +14,40 @@ namespace Pi_3
 {
     public partial class Form1 : Form
     {
+
+        public string Versao { get; set; }
+        public int idPartidaSelecionada { get; set; }
+        
         public Form1()
         {
             InitializeComponent();
-            label4.Text = Jogo.versao;
-            
-        }
+            ListarPartidas();
 
-        private void btn_Test_Click(object sender, EventArgs e)
+
+        }
+        public void AtualizarTela() 
+        {
+            label4.Text = Versao;
+
+        }
+        private void ListarPartidas()
         {
             try
             {
-                
                 string retorno = Jogo.ListarPartidas("T");
                 txt_Test.Text = retorno;
-
-                retorno = retorno.Replace("\r"," ");
+                retorno = retorno.Replace("\r", " ");
                 retorno = retorno.Substring(0, retorno.Length - 1);
                 string[] partidas = retorno.Split('\n');
-
                 listBox1.Items.Clear();
-                for (int i = 0; i< partidas.Length ; i++)
+                for (int i = 0; i < partidas.Length; i++)
                 {
                     listBox1.Items.Add(partidas[i]);
                 }
-                
-
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show("Erro ao listar partidas: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -158,6 +160,44 @@ namespace Pi_3
             {
                 MessageBox.Show("Erro ao abrir o formulário Jogadores: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void lb_Jurassicos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.idPartidaSelecionada = Convert.ToInt32(label1.Text); 
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+
+        private void btnSelecionarPartida_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.idPartidaSelecionada = Convert.ToInt32(label1.Text);
+                this.Close();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            this.Close();
+
         }
     }
 }

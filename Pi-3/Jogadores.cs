@@ -7,6 +7,8 @@ namespace Pi_3
 {
     public partial class Jogadores : Form
     {
+        public int idJogador { get; set; }
+        public string senhaJogador{ get; set; }
         public Jogadores()
         {
             InitializeComponent();
@@ -151,7 +153,11 @@ namespace Pi_3
                 // MessageBox.Show($"DEBUG -> id: [{idPartida}], jogador: [{jogador}], senha: [{senhaPartida}]");
 
                 string retorno = Jogo.Entrar(idPartida, jogador, senhaPartida);
+                var partesRetorno = retorno.Split(',');
 
+                idJogador = int.Parse(partesRetorno[0]);
+                senhaJogador = partesRetorno[1];
+                //retornar o id e a senha
                 if (string.IsNullOrWhiteSpace(retorno))
                 {
                     MessageBox.Show("Sem resposta do servidor ao tentar entrar.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -181,11 +187,14 @@ namespace Pi_3
                     }
                 }
                 catch { /* falha em atualizar lista não impede fluxo principal */ }
+                //this.idJogador = Convert.ToInt32(label1.Text);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao tentar entrar na partida: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

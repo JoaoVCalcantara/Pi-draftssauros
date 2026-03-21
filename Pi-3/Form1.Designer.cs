@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn_Test = new System.Windows.Forms.Button();
             this.txt_Test = new System.Windows.Forms.TextBox();
             this.lb_Jurassicos = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -39,17 +38,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btn_criar_partida = new System.Windows.Forms.Button();
             this.btnJogadores = new System.Windows.Forms.Button();
+            this.btnSelecionarPartida = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btn_Test
-            // 
-            this.btn_Test.Location = new System.Drawing.Point(12, 12);
-            this.btn_Test.Name = "btn_Test";
-            this.btn_Test.Size = new System.Drawing.Size(140, 33);
-            this.btn_Test.TabIndex = 0;
-            this.btn_Test.Text = "Ver partidas";
-            this.btn_Test.UseVisualStyleBackColor = true;
-            this.btn_Test.Click += new System.EventHandler(this.btn_Test_Click);
             // 
             // txt_Test
             // 
@@ -62,11 +53,12 @@
             // lb_Jurassicos
             // 
             this.lb_Jurassicos.AutoSize = true;
-            this.lb_Jurassicos.Location = new System.Drawing.Point(279, 405);
+            this.lb_Jurassicos.Location = new System.Drawing.Point(691, 405);
             this.lb_Jurassicos.Name = "lb_Jurassicos";
             this.lb_Jurassicos.Size = new System.Drawing.Size(56, 13);
             this.lb_Jurassicos.TabIndex = 2;
             this.lb_Jurassicos.Text = "Jurássicos";
+            this.lb_Jurassicos.Click += new System.EventHandler(this.lb_Jurassicos_Click);
             // 
             // listBox1
             // 
@@ -123,7 +115,7 @@
             // 
             // btn_criar_partida
             // 
-            this.btn_criar_partida.Location = new System.Drawing.Point(158, 12);
+            this.btn_criar_partida.Location = new System.Drawing.Point(12, 12);
             this.btn_criar_partida.Name = "btn_criar_partida";
             this.btn_criar_partida.Size = new System.Drawing.Size(137, 33);
             this.btn_criar_partida.TabIndex = 9;
@@ -133,7 +125,7 @@
             // 
             // btnJogadores
             // 
-            this.btnJogadores.Location = new System.Drawing.Point(301, 12);
+            this.btnJogadores.Location = new System.Drawing.Point(155, 12);
             this.btnJogadores.Name = "btnJogadores";
             this.btnJogadores.Size = new System.Drawing.Size(137, 33);
             this.btnJogadores.TabIndex = 10;
@@ -141,11 +133,33 @@
             this.btnJogadores.UseVisualStyleBackColor = true;
             this.btnJogadores.Click += new System.EventHandler(this.btnJogadores_Click);
             // 
+            // btnSelecionarPartida
+            // 
+            this.btnSelecionarPartida.Location = new System.Drawing.Point(507, 12);
+            this.btnSelecionarPartida.Name = "btnSelecionarPartida";
+            this.btnSelecionarPartida.Size = new System.Drawing.Size(137, 33);
+            this.btnSelecionarPartida.TabIndex = 11;
+            this.btnSelecionarPartida.Text = "Selecionar Partida";
+            this.btnSelecionarPartida.UseVisualStyleBackColor = true;
+            this.btnSelecionarPartida.Click += new System.EventHandler(this.btnSelecionarPartida_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(650, 12);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(137, 33);
+            this.btnCancelar.TabIndex = 12;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnSelecionarPartida);
             this.Controls.Add(this.btnJogadores);
             this.Controls.Add(this.btn_criar_partida);
             this.Controls.Add(this.label4);
@@ -156,7 +170,6 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.lb_Jurassicos);
             this.Controls.Add(this.txt_Test);
-            this.Controls.Add(this.btn_Test);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -166,8 +179,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btn_Test;
         private System.Windows.Forms.TextBox txt_Test;
         private System.Windows.Forms.Label lb_Jurassicos;
         private System.Windows.Forms.ListBox listBox1;
@@ -178,6 +189,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_criar_partida;
         private System.Windows.Forms.Button btnJogadores;
+        private System.Windows.Forms.Button btnSelecionarPartida;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
 

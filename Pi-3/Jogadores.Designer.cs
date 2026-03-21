@@ -95,7 +95,7 @@
             this.btnAdicionar.Name = "btnAdicionar";
             this.btnAdicionar.Size = new System.Drawing.Size(103, 23);
             this.btnAdicionar.TabIndex = 7;
-            this.btnAdicionar.Text = "Adicionar Jogador";
+            this.btnAdicionar.Text = "Entrar na partida";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
             // 
