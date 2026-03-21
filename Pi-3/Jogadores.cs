@@ -92,8 +92,7 @@ namespace Pi_3
                     .ToArray();
 
                 txtSenha.Clear();
-                foreach (var j in jogadores)
-                    txtSenha.AppendText(j + Environment.NewLine);
+
             }
             catch (Exception ex)
             {
