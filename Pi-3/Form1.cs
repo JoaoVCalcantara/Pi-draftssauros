@@ -16,6 +16,7 @@ namespace Pi_3
     {
 
         public string Versao { get; set; }
+        public string Equipe { get; set; }
         public int idPartidaSelecionada { get; set; }
         
         public Form1()
@@ -27,8 +28,9 @@ namespace Pi_3
         }
         public void AtualizarTela() 
         {
+            Equipe = "Jurássicos";
             label4.Text = Versao;
-
+            label5.Text = Equipe;
         }
         private void ListarPartidas()
         {
@@ -198,6 +200,13 @@ namespace Pi_3
 
             this.Close();
 
+        }
+
+        private void btnAtualizarPartidas_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            ListarPartidas();
+            Cursor.Current = Cursors.Default;
         }
     }
 }

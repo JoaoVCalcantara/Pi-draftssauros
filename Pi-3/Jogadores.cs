@@ -19,17 +19,14 @@ namespace Pi_3
         {
             try
             {
-                // Garantir que a caixa de senha esteja limpa ao abrir o formulário
                 txtSenha?.Clear();
 
-                // Preenche o combo com as partidas disponíveis ao abrir o formulário
-                string retorno = Jogo.ListarPartidas("T"); // ajustar filtro se necessário
+                string retorno = Jogo.ListarPartidas("T");
                 if (string.IsNullOrWhiteSpace(retorno) || retorno.StartsWith("ERRO", StringComparison.OrdinalIgnoreCase))
                 {
-                    // opcional: mostrar mensagem ou log
                     return;
                 }
-                
+
                 retorno = retorno.Replace("\r", "");
                 var partidas = retorno
                     .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
@@ -40,9 +37,10 @@ namespace Pi_3
                 foreach (var p in partidas)
                     cboJogadores.Items.Add(p);
 
-                // seleciona o primeiro item (opcional)
                 if (cboJogadores.Items.Count > 0)
                     cboJogadores.SelectedIndex = 0;
+
+                txtSenha.Clear();
             }
             catch (Exception ex)
             {
