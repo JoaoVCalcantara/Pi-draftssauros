@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Draft;
@@ -74,7 +75,10 @@ namespace Pi_3
 
                 if (string.IsNullOrWhiteSpace(retorno))
                 {
-                    txtSenha.Text = "Nenhum resultado encontrado.";
+                    lstJogadores.Items.Clear();
+                    string nenhumJogador = "Nenhum jogador";
+                    lstJogadores.Items.Add(nenhumJogador);
+                    lstJogadores.Text = nenhumJogador;
                     return;
                 }
 
@@ -91,8 +95,11 @@ namespace Pi_3
                     .Select(s => s.Trim())
                     .ToArray();
 
-                txtSenha.Clear();
-
+                lstJogadores.Items.Clear();
+                foreach (var j in jogadores)
+                    lstJogadores.Items.Add(j);
+                if (!lstJogadores.Text.Any())
+                    lstJogadores.Text = jogadores[0];
             }
             catch (Exception ex)
             {
