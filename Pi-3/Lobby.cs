@@ -86,7 +86,12 @@ namespace Pi_3
 
                 string retorno = Jogo.ExibirMao(id, senha);
 
-                MessageBox.Show(retorno);
+                string[] dinossauros = retorno.Split('\n');
+                lstDinossauros.Items.Clear();
+                for (int i = 0; i < dinossauros.Length; i++)
+                {
+                    lstDinossauros.Items.Add(dinossauros[i]);
+                }
 
                 if (string.IsNullOrWhiteSpace(retorno))
                 {

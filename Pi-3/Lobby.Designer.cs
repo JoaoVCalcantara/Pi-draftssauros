@@ -34,6 +34,7 @@
             this.lbId = new System.Windows.Forms.Label();
             this.btnIniciarPartida = new System.Windows.Forms.Button();
             this.btnListar = new System.Windows.Forms.Button();
+            this.lstDinossauros = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // button1
@@ -95,11 +96,20 @@
             this.btnListar.UseVisualStyleBackColor = true;
             this.btnListar.Click += new System.EventHandler(this.btnListar_Click);
             // 
+            // lstDinossauros
+            // 
+            this.lstDinossauros.FormattingEnabled = true;
+            this.lstDinossauros.Location = new System.Drawing.Point(547, 92);
+            this.lstDinossauros.Name = "lstDinossauros";
+            this.lstDinossauros.Size = new System.Drawing.Size(112, 95);
+            this.lstDinossauros.TabIndex = 6;
+            // 
             // Lobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lstDinossauros);
             this.Controls.Add(this.btnListar);
             this.Controls.Add(this.btnIniciarPartida);
             this.Controls.Add(this.lbId);
@@ -121,5 +131,6 @@
         private System.Windows.Forms.Label lbId;
         private System.Windows.Forms.Button btnIniciarPartida;
         private System.Windows.Forms.Button btnListar;
+        private System.Windows.Forms.ListBox lstDinossauros;
     }
 }

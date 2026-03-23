@@ -36,7 +36,6 @@ namespace Pi_3
             try
             {
                 string retorno = Jogo.ListarPartidas("T");
-                txt_Test.Text = retorno;
                 retorno = retorno.Replace("\r", " ");
                 retorno = retorno.Substring(0, retorno.Length - 1);
                 string[] partidas = retorno.Split('\n');
@@ -206,6 +205,11 @@ namespace Pi_3
             Cursor.Current = Cursors.WaitCursor;
             ListarPartidas();
             Cursor.Current = Cursors.Default;
+        }
+
+        private void txt_Test_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
