@@ -42,6 +42,8 @@
             this.txtCercado = new System.Windows.Forms.TextBox();
             this.lblDinossauro = new System.Windows.Forms.Label();
             this.lblCercado = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lstTabuleiro = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // button1
@@ -169,11 +171,30 @@
             this.lblCercado.TabIndex = 13;
             this.lblCercado.Text = "Cercado";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 327);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(102, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Estado do Tabuleiro";
+            // 
+            // lstTabuleiro
+            // 
+            this.lstTabuleiro.FormattingEnabled = true;
+            this.lstTabuleiro.Location = new System.Drawing.Point(12, 343);
+            this.lstTabuleiro.Name = "lstTabuleiro";
+            this.lstTabuleiro.Size = new System.Drawing.Size(120, 95);
+            this.lstTabuleiro.TabIndex = 15;
+            // 
             // Lobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lstTabuleiro);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblCercado);
             this.Controls.Add(this.lblDinossauro);
             this.Controls.Add(this.txtCercado);
@@ -211,5 +232,7 @@
         private System.Windows.Forms.TextBox txtCercado;
         private System.Windows.Forms.Label lblDinossauro;
         private System.Windows.Forms.Label lblCercado;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox lstTabuleiro;
     }
 }

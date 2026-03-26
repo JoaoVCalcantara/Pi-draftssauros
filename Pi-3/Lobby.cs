@@ -130,56 +130,91 @@ namespace Pi_3
         {
             int idJogador = int.Parse(lbId.Text);
             int idPartida = int.Parse(lbPartida.Text);
+            string senhaJogador = lbSenha.Text;
+            string dinossauroSelecionado = txtDinossauro.Text;
+            string cercadoSelecionado = txtCercado.Text;
 
             string statusPartida = Jogo.VerificarPartida(idPartida);
-            string[] verificarPartida = statusPartida.Split('\n');
+            //não sei qual a saída de VerificarPartida, então o valor do Split não está definido ainda
+            string[] verificarPartida = statusPartida.Split(' ');
+
+            string statusTabuleiro = Jogo.ExibirTabuleiro(idJogador, senhaJogador);
+            string[] exibirTabuleiro = statusTabuleiro.Split('\n');
+
+            Jogo.ListarCercados();
+
+
+            foreach(string itemTabuleiro in exibirTabuleiro)
+            {
+                lstTabuleiro.Items.Add(itemTabuleiro);
+            }
 
             string dadoSorteado = verificarPartida[verificarPartida.Length - 1];
 
-            switch (dadoSorteado)
+            switch(dadoSorteado)
             {
                 case "AL":
-                    if (txtCercado.Text == "rs" || txtCercado.Text == "cd" || txtCercado.Text == "is")
+                    if (cercadoSelecionado == "rs" || cercadoSelecionado == "cd" || cercadoSelecionado == "is")
                     {
-                        MessageBox.Show("Você deve seguir as regras do dado.");
-                        break;
+                        MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
                 case "FL":
-                    if (txtCercado.Text == "cd" || txtCercado.Text == "pa" || txtCercado.Text == "is")
+                    if (cercadoSelecionado == "cd" || cercadoSelecionado == "pa" || cercadoSelecionado == "is")
                     {
-                        MessageBox.Show("Você deve seguir as regras do dado.");
-                        break;
+                        MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
                 case "PR":
-                    if (txtCercado.Text == "fi" || txtCercado.Text == "rs" || txtCercado.Text == "mt")
+                    if (cercadoSelecionado == "fi" || cercadoSelecionado == "rs" || cercadoSelecionado == "mt")
                     {
-                        MessageBox.Show("Você deve seguir as regras do dado.");
-                        break;
+                        MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
                 case "WC":
-                    if (txtCercado.Text == "fi" || txtCercado.Text == "mt" || txtCercado.Text == "pa")
+                    if (cercadoSelecionado == "fi" || cercadoSelecionado == "mt" || cercadoSelecionado == "pa")
                     {
-                        MessageBox.Show("Você deve seguir as regras do dado.");
-                        break;
+                        MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
+                //ainda não consegui pensar numa lógica para essa situação
                 case "TI":
-                    
+                    foreach(string dinossauro in dinossaurosNoTabuleiro)
+                    {
+                        if(dinossauroSelecionado == dinossauro)
+                        {
+                            MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
                     break;
 
                 case "VZ":
-                    
+                    foreach(string cercado in cercadosNoTabuleiro)
+                    {
+                        if(cercadoSelecionado == "ri")
+                        {
+                            break;
+                        }
+                        if(cercadoSelecionado == cercado)
+                        {
+                            MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
             }
