@@ -124,11 +124,6 @@ namespace Pi_3
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_criar_partida_Click(object sender, EventArgs e)
         {
             try
@@ -162,16 +157,11 @@ namespace Pi_3
             }
         }
 
-        private void lb_Jurassicos_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             try
             {
-                this.idPartidaSelecionada = Convert.ToInt32(label1.Text); 
+                this.idPartidaSelecionada = Convert.ToInt32(label1.Text);
                 this.Close();
             }
             catch (Exception)
@@ -205,11 +195,6 @@ namespace Pi_3
             Cursor.Current = Cursors.WaitCursor;
             ListarPartidas();
             Cursor.Current = Cursors.Default;
-        }
-
-        private void txt_Test_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

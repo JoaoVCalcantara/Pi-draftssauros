@@ -35,6 +35,13 @@
             this.btnIniciarPartida = new System.Windows.Forms.Button();
             this.btnListar = new System.Windows.Forms.Button();
             this.lstDinossauros = new System.Windows.Forms.ListBox();
+            this.lblRodada = new System.Windows.Forms.Label();
+            this.lstVerficarTurno = new System.Windows.Forms.ListBox();
+            this.btnJogar = new System.Windows.Forms.Button();
+            this.txtDinossauro = new System.Windows.Forms.TextBox();
+            this.txtCercado = new System.Windows.Forms.TextBox();
+            this.lblDinossauro = new System.Windows.Forms.Label();
+            this.lblCercado = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -99,16 +106,81 @@
             // lstDinossauros
             // 
             this.lstDinossauros.FormattingEnabled = true;
-            this.lstDinossauros.Location = new System.Drawing.Point(547, 92);
+            this.lstDinossauros.Location = new System.Drawing.Point(547, 98);
             this.lstDinossauros.Name = "lstDinossauros";
             this.lstDinossauros.Size = new System.Drawing.Size(112, 95);
             this.lstDinossauros.TabIndex = 6;
+            // 
+            // lblRodada
+            // 
+            this.lblRodada.AutoSize = true;
+            this.lblRodada.Location = new System.Drawing.Point(544, 82);
+            this.lblRodada.Name = "lblRodada";
+            this.lblRodada.Size = new System.Drawing.Size(0, 13);
+            this.lblRodada.TabIndex = 7;
+            // 
+            // lstVerficarTurno
+            // 
+            this.lstVerficarTurno.FormattingEnabled = true;
+            this.lstVerficarTurno.Location = new System.Drawing.Point(327, 98);
+            this.lstVerficarTurno.Name = "lstVerficarTurno";
+            this.lstVerficarTurno.Size = new System.Drawing.Size(120, 95);
+            this.lstVerficarTurno.TabIndex = 8;
+            // 
+            // btnJogar
+            // 
+            this.btnJogar.Location = new System.Drawing.Point(440, 267);
+            this.btnJogar.Name = "btnJogar";
+            this.btnJogar.Size = new System.Drawing.Size(120, 38);
+            this.btnJogar.TabIndex = 9;
+            this.btnJogar.Text = "Fazer Jogada";
+            this.btnJogar.UseVisualStyleBackColor = true;
+            this.btnJogar.Click += new System.EventHandler(this.btnJogar_Click);
+            // 
+            // txtDinossauro
+            // 
+            this.txtDinossauro.Location = new System.Drawing.Point(386, 226);
+            this.txtDinossauro.Name = "txtDinossauro";
+            this.txtDinossauro.Size = new System.Drawing.Size(100, 20);
+            this.txtDinossauro.TabIndex = 10;
+            // 
+            // txtCercado
+            // 
+            this.txtCercado.Location = new System.Drawing.Point(516, 226);
+            this.txtCercado.Name = "txtCercado";
+            this.txtCercado.Size = new System.Drawing.Size(100, 20);
+            this.txtCercado.TabIndex = 11;
+            // 
+            // lblDinossauro
+            // 
+            this.lblDinossauro.AutoSize = true;
+            this.lblDinossauro.Location = new System.Drawing.Point(383, 210);
+            this.lblDinossauro.Name = "lblDinossauro";
+            this.lblDinossauro.Size = new System.Drawing.Size(63, 13);
+            this.lblDinossauro.TabIndex = 12;
+            this.lblDinossauro.Text = "Dinossauro:";
+            // 
+            // lblCercado
+            // 
+            this.lblCercado.AutoSize = true;
+            this.lblCercado.Location = new System.Drawing.Point(513, 210);
+            this.lblCercado.Name = "lblCercado";
+            this.lblCercado.Size = new System.Drawing.Size(47, 13);
+            this.lblCercado.TabIndex = 13;
+            this.lblCercado.Text = "Cercado";
             // 
             // Lobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblCercado);
+            this.Controls.Add(this.lblDinossauro);
+            this.Controls.Add(this.txtCercado);
+            this.Controls.Add(this.txtDinossauro);
+            this.Controls.Add(this.btnJogar);
+            this.Controls.Add(this.lstVerficarTurno);
+            this.Controls.Add(this.lblRodada);
             this.Controls.Add(this.lstDinossauros);
             this.Controls.Add(this.btnListar);
             this.Controls.Add(this.btnIniciarPartida);
@@ -132,5 +204,12 @@
         private System.Windows.Forms.Button btnIniciarPartida;
         private System.Windows.Forms.Button btnListar;
         private System.Windows.Forms.ListBox lstDinossauros;
+        private System.Windows.Forms.Label lblRodada;
+        private System.Windows.Forms.ListBox lstVerficarTurno;
+        private System.Windows.Forms.Button btnJogar;
+        private System.Windows.Forms.TextBox txtDinossauro;
+        private System.Windows.Forms.TextBox txtCercado;
+        private System.Windows.Forms.Label lblDinossauro;
+        private System.Windows.Forms.Label lblCercado;
     }
 }

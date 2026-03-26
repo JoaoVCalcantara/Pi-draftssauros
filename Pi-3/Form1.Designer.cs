@@ -50,7 +50,6 @@
             this.lb_Jurassicos.Name = "lb_Jurassicos";
             this.lb_Jurassicos.Size = new System.Drawing.Size(0, 13);
             this.lb_Jurassicos.TabIndex = 2;
-            this.lb_Jurassicos.Click += new System.EventHandler(this.lb_Jurassicos_Click);
             // 
             // listBox1
             // 
@@ -148,7 +147,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(697, 405);
+            this.label5.Location = new System.Drawing.Point(714, 405);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 13;
@@ -184,7 +183,6 @@
             this.Controls.Add(this.lb_Jurassicos);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

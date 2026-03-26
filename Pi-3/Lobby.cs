@@ -49,10 +49,11 @@ namespace Pi_3
         {
             try
             {
-                int id = int.Parse(lbId.Text);
-                string senha = lbSenha.Text;
+                int idJogador = int.Parse(lbId.Text);
+                string senhaJogador = lbSenha.Text;
+                int idPartida = int.Parse(lbPartida.Text);
 
-                string retorno = Jogo.Iniciar(id, senha);
+                string retorno = Jogo.Iniciar(idJogador, senhaJogador);
 
                 if (string.IsNullOrWhiteSpace(retorno))
                 {
@@ -67,6 +68,20 @@ namespace Pi_3
                 }
 
                 MessageBox.Show("Partida iniciada com sucesso!");
+
+                string statusPartida = Jogo.VerificarPartida(idPartida);
+                string[] verificarPartida = statusPartida.Split('\n');
+                lblRodada.Text = verificarPartida[1];
+
+                string statusTurno = Jogo.VerificarTurno(idPartida);
+                string[] verificarTurno = statusTurno.Split('\n');
+
+                foreach (string turno in verificarTurno)
+                {
+                    lstVerficarTurno.Items.Add(turno);
+                }
+
+                
             }
             catch (Exception ex)
             {
@@ -109,6 +124,67 @@ namespace Pi_3
             {
                 MessageBox.Show("Erro ao listar: " + ex.Message);
             }
+        }
+
+        private void btnJogar_Click(object sender, EventArgs e)
+        {
+            int idJogador = int.Parse(lbId.Text);
+            int idPartida = int.Parse(lbPartida.Text);
+
+            string statusPartida = Jogo.VerificarPartida(idPartida);
+            string[] verificarPartida = statusPartida.Split('\n');
+
+            string dadoSorteado = verificarPartida[verificarPartida.Length - 1];
+
+            switch (dadoSorteado)
+            {
+                case "AL":
+                    if (txtCercado.Text == "rs" || txtCercado.Text == "cd" || txtCercado.Text == "is")
+                    {
+                        MessageBox.Show("Você deve seguir as regras do dado.");
+                        break;
+                    }
+                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    break;
+
+                case "FL":
+                    if (txtCercado.Text == "cd" || txtCercado.Text == "pa" || txtCercado.Text == "is")
+                    {
+                        MessageBox.Show("Você deve seguir as regras do dado.");
+                        break;
+                    }
+                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    break;
+
+                case "PR":
+                    if (txtCercado.Text == "fi" || txtCercado.Text == "rs" || txtCercado.Text == "mt")
+                    {
+                        MessageBox.Show("Você deve seguir as regras do dado.");
+                        break;
+                    }
+                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    break;
+
+                case "WC":
+                    if (txtCercado.Text == "fi" || txtCercado.Text == "mt" || txtCercado.Text == "pa")
+                    {
+                        MessageBox.Show("Você deve seguir as regras do dado.");
+                        break;
+                    }
+                    Jogo.Jogar(idJogador, lbSenha.Text, txtDinossauro.Text, txtCercado.Text);
+                    break;
+
+                case "TI":
+                    
+                    break;
+
+                case "VZ":
+                    
+                    break;
+
+            }
+                 
+
         }
     }
 }
