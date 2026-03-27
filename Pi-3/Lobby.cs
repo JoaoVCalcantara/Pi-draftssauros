@@ -96,10 +96,10 @@ namespace Pi_3
         {
             try
             {
-                int id = int.Parse(lbId.Text);
-                string senha = lbSenha.Text;
+                int idJogador = int.Parse(lbId.Text);
+                string senhaJogador = lbSenha.Text;
 
-                string retorno = Jogo.ExibirMao(id, senha);
+                string retorno = Jogo.ExibirMao(idJogador, senhaJogador);
 
                 string[] dinossauros = retorno.Split('\n');
                 lstDinossauros.Items.Clear();
@@ -129,8 +129,8 @@ namespace Pi_3
         private void btnJogar_Click(object sender, EventArgs e)
         {
             int idJogador = int.Parse(lbId.Text);
-            int idPartida = int.Parse(lbPartida.Text);
             string senhaJogador = lbSenha.Text;
+            int idPartida = int.Parse(lbPartida.Text);
             string dinossauroSelecionado = txtDinossauro.Text;
             string cercadoSelecionado = txtCercado.Text;
 
@@ -141,12 +141,36 @@ namespace Pi_3
             string statusTabuleiro = Jogo.ExibirTabuleiro(idJogador, senhaJogador);
             string[] exibirTabuleiro = statusTabuleiro.Split('\n');
 
-            Jogo.ListarCercados();
+            string statusMao = Jogo.ExibirMao(idJogador, senhaJogador);
+            string[] exibirMao = statusMao.Split('\n');
 
+            List<string> dinossaurosNoTabuleiro = new List<string>();
+            List<string> cercadosNoTabuleiro = new List<string>();
+            List<string> dinossaurosNaMao = new List<string>();
 
+            lstTabuleiro.Items.Clear();
             foreach(string itemTabuleiro in exibirTabuleiro)
             {
                 lstTabuleiro.Items.Add(itemTabuleiro);
+            }
+
+            foreach (string mao in exibirMao)
+            {
+                string[] infoMao = mao.Split(' ');
+                dinossaurosNaMao.Add(infoMao[0]);
+            }
+
+            foreach (string cercado in exibirTabuleiro)
+            {
+                string[] infoCercados = cercado.Split(' ');
+                cercadosNoTabuleiro.Add(infoCercados[0]);
+
+            }
+
+            foreach (string dinossauro in exibirTabuleiro)
+            {
+                string[] infoDinossauros = dinossauro.Split(' ');
+                dinossaurosNoTabuleiro.Add(infoDinossauros[1]);
             }
 
             string dadoSorteado = verificarPartida[verificarPartida.Length - 1];
@@ -159,6 +183,15 @@ namespace Pi_3
                         MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    foreach (string dinossauro in dinossaurosNaMao)
+                    {
+                        if (dinossauroSelecionado == dinossauro)
+                        {
+                            break;
+                        }
+                        MessageBox.Show("Você deve jogar um dinossauro válido", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
@@ -166,6 +199,15 @@ namespace Pi_3
                     if (cercadoSelecionado == "cd" || cercadoSelecionado == "pa" || cercadoSelecionado == "is")
                     {
                         MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    foreach (string dinossauro in dinossaurosNaMao)
+                    {
+                        if (dinossauroSelecionado == dinossauro)
+                        {
+                            break;
+                        }
+                        MessageBox.Show("Você deve jogar um dinossauro válido", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
@@ -177,6 +219,15 @@ namespace Pi_3
                         MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    foreach (string dinossauro in dinossaurosNaMao)
+                    {
+                        if (dinossauroSelecionado == dinossauro)
+                        {
+                            break;
+                        }
+                        MessageBox.Show("Você deve jogar um dinossauro válido", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
@@ -186,22 +237,40 @@ namespace Pi_3
                         MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    foreach (string dinossauro in dinossaurosNaMao)
+                    {
+                        if (dinossauroSelecionado == dinossauro)
+                        {
+                            break;
+                        }
+                        MessageBox.Show("Você deve jogar um dinossauro válido", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
-                //ainda não consegui pensar numa lógica para essa situação
                 case "TI":
                     foreach(string dinossauro in dinossaurosNoTabuleiro)
                     {
-                        if(dinossauroSelecionado == dinossauro)
+                        if(dinossauroSelecionado == "ti" && dinossauroSelecionado == dinossauro)
                         {
                             MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
+                    foreach (string dinossauro in dinossaurosNaMao)
+                    {
+                        if (dinossauroSelecionado == dinossauro)
+                        {
+                            break;
+                        }
+                        MessageBox.Show("Você deve jogar um dinossauro válido", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
 
-                case "VZ":
+                case "VZ":  
                     foreach(string cercado in cercadosNoTabuleiro)
                     {
                         if(cercadoSelecionado == "ri")
@@ -213,6 +282,15 @@ namespace Pi_3
                             MessageBox.Show("Você deve seguir as regras do dado.", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
+                    }
+                    foreach (string dinossauro in dinossaurosNaMao)
+                    {
+                        if (dinossauroSelecionado == dinossauro)
+                        {
+                            break;
+                        }
+                        MessageBox.Show("Você deve jogar um dinossauro válido", "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
                     Jogo.Jogar(idJogador, senhaJogador, dinossauroSelecionado, cercadoSelecionado);
                     break;
