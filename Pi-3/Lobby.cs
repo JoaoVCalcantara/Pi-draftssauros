@@ -299,5 +299,10 @@ namespace Pi_3
                  
 
         }
+
+        private void Lobby_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
