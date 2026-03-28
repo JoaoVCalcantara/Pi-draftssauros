@@ -16,14 +16,25 @@ namespace Pi_3
         private string versao;
         private int idJogador;
         private string senhaJogador;
+        public string Equipe;
+
         public Lobby()
         {
             InitializeComponent();
             this.versao = Jogo.versao;
-
+            AtualizarTela();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void AtualizarTela()
+        {
+            Equipe = "Jurássicos";
+            label8.Text = versao;
+            label9.Text = Equipe;
+        }
+    
+        
+
+private void button1_Click(object sender, EventArgs e)
         {
             Form1 f = new Form1();
             f.Versao = this.versao;
@@ -338,6 +349,50 @@ namespace Pi_3
             }
 
             MessageBox.Show("Jogada realizada com sucesso!");
+        }
+
+        private void btnVerificarTabuleiro_Click(object sender, EventArgs e)
+        {
+            int idJogador;
+
+            if (!int.TryParse(txtIDJogadorTabuleiro.Text, out idJogador))
+            {
+                MessageBox.Show("Informe um ID válido.");
+                return;
+            }
+
+            string senhaJogador = lblKeyJogadorPrincipal.Text;
+
+            if (string.IsNullOrWhiteSpace(senhaJogador))
+            {
+                MessageBox.Show("Senha do jogador não informada.");
+                return;
+            }
+
+            string statusTabuleiro = Jogo.ExibirTabuleiro(idJogador, senhaJogador);
+
+            if (string.IsNullOrWhiteSpace(statusTabuleiro))
+            {
+                MessageBox.Show("Sem resposta do servidor.");
+                return;
+            }
+
+            if (statusTabuleiro.StartsWith("ERRO"))
+            {
+                MessageBox.Show(statusTabuleiro);
+                return;
+            }
+
+            statusTabuleiro = statusTabuleiro.Replace("\r", "");
+            string[] linhas = statusTabuleiro.Split('\n');
+
+            lstTabuleiro.Items.Clear();
+
+            foreach (string linha in linhas)
+            {
+                if (!string.IsNullOrWhiteSpace(linha))
+                    lstTabuleiro.Items.Add(linha.Trim());
+            }
         }
 
         private void Lobby_Load(object sender, EventArgs e)

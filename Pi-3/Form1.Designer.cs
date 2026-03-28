@@ -134,6 +134,7 @@
             // 
             // btn_criar_partida
             // 
+            this.btn_criar_partida.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_criar_partida.Location = new System.Drawing.Point(118, 29);
             this.btn_criar_partida.Name = "btn_criar_partida";
             this.btn_criar_partida.Size = new System.Drawing.Size(94, 63);
@@ -144,6 +145,7 @@
             // 
             // btnJogadores
             // 
+            this.btnJogadores.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnJogadores.Location = new System.Drawing.Point(118, 39);
             this.btnJogadores.Name = "btnJogadores";
             this.btnJogadores.Size = new System.Drawing.Size(94, 66);
@@ -154,6 +156,7 @@
             // 
             // btnSelecionarPartida
             // 
+            this.btnSelecionarPartida.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelecionarPartida.Location = new System.Drawing.Point(394, 324);
             this.btnSelecionarPartida.Name = "btnSelecionarPartida";
             this.btnSelecionarPartida.Size = new System.Drawing.Size(137, 57);
