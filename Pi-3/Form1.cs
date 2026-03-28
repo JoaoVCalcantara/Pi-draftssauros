@@ -13,188 +13,272 @@ namespace Pi_3
 {
     public partial class Form1 : Form
     {
-
         public string Versao { get; set; }
         public string Equipe { get; set; }
         public int idPartidaSelecionada { get; set; }
-        
+
         public Form1()
         {
             InitializeComponent();
             ListarPartidas();
-
-
         }
-        public void AtualizarTela() 
+
+        public void AtualizarTela()
         {
             Equipe = "Jurássicos";
             label4.Text = Versao;
             label5.Text = Equipe;
         }
+
         private void ListarPartidas()
         {
-            try
+            string retorno = Jogo.ListarPartidas("T");
+
+            if (string.IsNullOrWhiteSpace(retorno))
             {
-                string retorno = Jogo.ListarPartidas("T");
-                retorno = retorno.Replace("\r", " ");
-                retorno = retorno.Substring(0, retorno.Length - 1);
-                string[] partidas = retorno.Split('\n');
                 listBox1.Items.Clear();
-                for (int i = 0; i < partidas.Length; i++)
-                {
-                    listBox1.Items.Add(partidas[i]);
-                }
+                MessageBox.Show("Sem partidas disponíveis.");
+                return;
             }
-            catch (Exception ex)
+
+            retorno = retorno.Replace("\r", "").TrimEnd();
+
+            string[] partidas = retorno.Split('\n');
+
+            listBox1.Items.Clear();
+            foreach (var p in partidas)
             {
-                MessageBox.Show("Erro ao listar partidas: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!string.IsNullOrWhiteSpace(p))
+                    listBox1.Items.Add(p);
             }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            var selected = listBox1.SelectedItem;
+            if (selected == null) return;
+
+            string partida = selected.ToString();
+            if (string.IsNullOrWhiteSpace(partida)) return;
+
+            string[] dadosPartida = partida.Split(',');
+
+            if (dadosPartida.Length < 4)
             {
-                var selected = listBox1.SelectedItem;
-                if (selected == null)
-                {
-                    // Nada selecionado
-                    return;
-                }
-
-                string partida = selected.ToString();
-                if (string.IsNullOrWhiteSpace(partida))
-                {
-                    return;
-                }
-
-                string[] dadosPartida = partida.Split(',');
-                if (dadosPartida.Length < 3)
-                {
-                    MessageBox.Show("Formato de partida inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (!int.TryParse(dadosPartida[0], out int idPartida))
-                {
-                    MessageBox.Show("ID da partida inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                string nomePartida = dadosPartida[1].Trim();
-                string data = dadosPartida[2].Trim();
-
-                label1.Text = idPartida.ToString();
-                label2.Text = nomePartida;
-                label3.Text = data;
-
-                string retorno = Jogo.ListarJogadores(idPartida);
-
-                if (string.IsNullOrEmpty(retorno))
-                {
-                    listBox2.Items.Clear();
-                    MessageBox.Show("Nenhum jogador registrado para esta partida.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                retorno = retorno.Replace("\r", "");
-
-                // Verifica se a resposta indica erro
-                if (retorno.Length >= 4 && retorno.StartsWith("ERRO", StringComparison.OrdinalIgnoreCase))
-                {
-                    MessageBox.Show("Deu erro bixu, não tem partidas disponíveis \n" + retorno, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Quebra em linhas e elimina entradas vazias
-                string[] jogadores = retorno.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-                listBox2.Items.Clear();
-                foreach (var j in jogadores)
-                {
-                    var item = j?.Trim();
-                    if (!string.IsNullOrEmpty(item))
-                        listBox2.Items.Add(item);
-                }
+                MessageBox.Show("Formato de partida inválido.");
+                return;
             }
-            catch (Exception ex)
+
+            if (!int.TryParse(dadosPartida[0], out int idPartida))
             {
-                // Evita relançar a exceção e informa o usuário
-                MessageBox.Show("Ocorreu um erro ao carregar jogadores: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("ID da partida inválido.");
+                return;
+            }
+
+            string nomePartida = dadosPartida[1].Trim();
+            string data = dadosPartida[2].Trim();
+            string statusPartida = dadosPartida[3].Trim();
+            string statusFormatado = "";
+
+            if (statusPartida == "A")
+                statusFormatado = "Aberta";
+            else if (statusPartida == "J")
+                statusFormatado = "Jogando";
+            else if (statusPartida == "E")
+                statusFormatado = "Encerrado";
+            else
+                statusFormatado = "Desconhecido";
+
+            label1.Text = idPartida.ToString();
+            label2.Text = nomePartida;
+            label3.Text = data;
+            label12.Text = statusFormatado;
+
+            string retorno = Jogo.ListarJogadores(idPartida);
+
+            if (string.IsNullOrWhiteSpace(retorno))
+            {
+                listBox2.Items.Clear();
+                MessageBox.Show("Nenhum jogador registrado.");
+                return;
+            }
+
+            if (retorno.StartsWith("ERRO", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(retorno);
+                return;
+            }
+
+            retorno = retorno.Replace("\r", "");
+
+            string[] jogadores = retorno.Split('\n');
+
+            listBox2.Items.Clear();
+            foreach (var j in jogadores)
+            {
+                if (!string.IsNullOrWhiteSpace(j))
+                    listBox2.Items.Add(j.Trim());
             }
         }
 
         private void btn_criar_partida_Click(object sender, EventArgs e)
         {
-            try
+            Button btn = (Button)sender;
+
+            string nome = txtPartida.Text.Trim();
+            string senha = txtSenha.Text.Trim();
+            string grupo = txtGrupo.Text.Trim();
+
+            if (string.IsNullOrEmpty(nome))
             {
-                var partidaForm = new Partida();
-                partidaForm.StartPosition = FormStartPosition.CenterParent;
-                // Use ShowDialog(this) para modal com owner; se preferir não-modal troque para Show().
-                partidaForm.ShowDialog(this);
-                partidaForm.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao abrir o formulário Jogadores: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Informe o nome da partida.");
+                return;
             }
 
+            if (string.IsNullOrEmpty(senha))
+            {
+                MessageBox.Show("Informe a senha da partida.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(grupo))
+            {
+                MessageBox.Show("Informe o nome do grupo.");
+                return;
+            }
+
+            if (nome.Length > 20)
+            {
+                MessageBox.Show("Nome da partida deve ter no máximo 20 caracteres.");
+                return;
+            }
+
+            if (senha.Length > 10)
+            {
+                MessageBox.Show("Senha deve ter no máximo 10 caracteres.");
+                return;
+            }
+
+            if (grupo.Length > 40)
+            {
+                MessageBox.Show("Nome do grupo deve ter no máximo 40 caracteres.");
+                return;
+            }
+
+            btn.Enabled = false;
+
+            string retorno = Jogo.CriarPartida(nome, senha, grupo);
+
+            if (string.IsNullOrWhiteSpace(retorno))
+            {
+                MessageBox.Show("Sem resposta do servidor.");
+                btn.Enabled = true;
+                return;
+            }
+
+            retorno = retorno.Trim();
+
+            if (retorno.StartsWith("ERRO"))
+            {
+                MessageBox.Show(retorno);
+                btn.Enabled = true;
+                return;
+            }
+
+           
+            label15.Text = "Partida criada com sucesso!";
+
+           
+            ListarPartidas();
+
+            btn.Enabled = true;
         }
 
         private void btnJogadores_Click(object sender, EventArgs e)
         {
-            try
+            string nomeJogador = txtNomeJogador.Text.Trim();
+            string senhaPartida = txtSenha2.Text.Trim();
+
+            int idPartida;
+            if (!int.TryParse(txtIDPartida.Text.Trim(), out idPartida))
             {
-                var jogadoresForm = new Jogadores();
-                jogadoresForm.StartPosition = FormStartPosition.CenterParent;
-                // Use ShowDialog(this) para modal com owner; se preferir não-modal troque para Show().
-                jogadoresForm.ShowDialog(this);
-                jogadoresForm.Dispose();
+                MessageBox.Show("Informe um ID de partida válido.");
+                return;
             }
-            catch (Exception ex)
+
+            if (string.IsNullOrEmpty(nomeJogador))
             {
-                MessageBox.Show("Erro ao abrir o formulário Jogadores: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Informe o nome do jogador.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(senhaPartida))
+            {
+                MessageBox.Show("Informe a senha da partida.");
+                return;
+            }
+
+            string retorno = Jogo.Entrar(idPartida, nomeJogador, senhaPartida);
+
+            if (string.IsNullOrWhiteSpace(retorno))
+            {
+                MessageBox.Show("Sem resposta do servidor.");
+                return;
+            }
+
+            retorno = retorno.Trim();
+
+            if (retorno.StartsWith("ERRO"))
+            {
+                MessageBox.Show(retorno);
+                return;
+            }
+
+            string[] partesRetorno = retorno.Split(',');
+
+            if (partesRetorno.Length >= 2)
+            {
+                lblIDJogador.Text = partesRetorno[0].Trim();
+                lblSenhaJogador.Text = partesRetorno[1].Trim();
+                label20.Text = "Jogador adicionado!";
+            }
+            else
+            {
+                MessageBox.Show("Retorno inválido ao entrar na partida.");
+                return;
+            }
+
+            string jogadores = Jogo.ListarJogadores(idPartida);
+
+            if (!string.IsNullOrWhiteSpace(jogadores) && !jogadores.StartsWith("ERRO"))
+            {
+                jogadores = jogadores.Replace("\r", "");
+                string[] listaJogadores = jogadores.Split('\n');
+
+                listBox2.Items.Clear();
+
+                foreach (string j in listaJogadores)
+                {
+                    if (!string.IsNullOrWhiteSpace(j))
+                        listBox2.Items.Add(j.Trim());
+                }
             }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                this.idPartidaSelecionada = Convert.ToInt32(label1.Text);
-                this.Close();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
+            idPartidaSelecionada = 0;
+            Close();
         }
 
         private void btnSelecionarPartida_Click(object sender, EventArgs e)
         {
-            try
+            if (int.TryParse(label1.Text, out int id))
             {
-                this.idPartidaSelecionada = Convert.ToInt32(label1.Text);
-                this.Close();
-
-            }
-            catch (Exception)
-            {
-
-                throw;
+                idPartidaSelecionada = id;
             }
 
-            this.Close();
-
-        }
-
-        private void btnAtualizarPartidas_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            ListarPartidas();
-            Cursor.Current = Cursors.Default;
+            Close();
         }
     }
 }
