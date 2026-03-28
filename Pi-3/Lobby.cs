@@ -30,108 +30,245 @@ namespace Pi_3
             f.AtualizarTela();
             f.ShowDialog();
 
-            lbPartida.Text = f.IdPartidaSelecionada;
-            //id do jogador
-            //senha do jogador
+            lblPartida.Text = f.idPartidaSelecionada.ToString();
+        }
 
-            Jogadores j = new Jogadores();
-
-
-            if (j.ShowDialog() == DialogResult.OK)
+        private void btnEntrarJogadorPrincipal_Click(object sender, EventArgs e)
+        {
+            int idPartida;
+            if (!int.TryParse(lblPartida.Text, out idPartida))
             {
-                lbId.Text = j.idJogador.ToString();
-                lbSenha.Text = j.senhaJogador;
+                MessageBox.Show("Selecione uma partida válida.");
+                return;
             }
 
+            string nomeJogador = txtNomeJogadorPrincipal.Text.Trim();
+            string senhaPartida = txtSenhaPartida.Text.Trim();
+
+            if (string.IsNullOrEmpty(nomeJogador))
+            {
+                MessageBox.Show("Informe o nome do jogador principal.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(senhaPartida))
+            {
+                MessageBox.Show("Informe a senha da partida.");
+                return;
+            }
+
+            string retorno = Jogo.Entrar(idPartida, nomeJogador, senhaPartida);
+
+            if (string.IsNullOrWhiteSpace(retorno))
+            {
+                MessageBox.Show("Sem resposta do servidor.");
+                return;
+            }
+
+            retorno = retorno.Trim();
+
+            if (retorno.StartsWith("ERRO"))
+            {
+                MessageBox.Show(retorno);
+                return;
+            }
+
+            string[] partesRetorno = retorno.Split(',');
+
+            if (partesRetorno.Length < 2)
+            {
+                MessageBox.Show("Retorno inválido ao entrar na partida.");
+                return;
+            }
+
+            lblIDJogadorPrincipal.Text = partesRetorno[0].Trim();
+            lblKeyJogadorPrincipal.Text = partesRetorno[1].Trim();
+            lblStatusJogadorPrincipal.Text = "Você entrou na partida!";
         }
+
 
         private void btnIniciarPartida_Click(object sender, EventArgs e)
         {
-            try
+            lblStatusPartida.Text = "";
+
+            int idJogador;
+            if (!int.TryParse(lblIDJogadorPrincipal.Text, out idJogador))
             {
-                int idJogador = int.Parse(lbId.Text);
-                string senhaJogador = lbSenha.Text;
-
-                string retorno = Jogo.Iniciar(idJogador, senhaJogador);
-
-                if (string.IsNullOrWhiteSpace(retorno))
-                {
-                    MessageBox.Show("Sem resposta do servidor");
-                    return;
-                }
-
-                if (retorno.StartsWith("ERRO"))
-                {
-                    MessageBox.Show(retorno);
-                    return;
-                }
-
-                MessageBox.Show("Partida iniciada com sucesso!");
-
-                
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("Erro ao iniciar: " + ex.Message);
+                MessageBox.Show("ID do jogador principal inválido.");
+                return;
             }
 
+            int idPartida;
+            if (!int.TryParse(lblPartida.Text, out idPartida))
+            {
+                MessageBox.Show("ID da partida inválido.");
+                return;
+            }
+
+            string senhaJogador = lblKeyJogadorPrincipal.Text;
+
+            if (string.IsNullOrWhiteSpace(senhaJogador))
+            {
+                MessageBox.Show("Senha do jogador principal não informada.");
+                return;
+            }
+
+            string retorno = Jogo.Iniciar(idJogador, senhaJogador);
+
+            if (string.IsNullOrWhiteSpace(retorno))
+            {
+                MessageBox.Show("Sem resposta do servidor");
+                return;
+            }
+
+            if (retorno.StartsWith("ERRO"))
+            {
+                MessageBox.Show(retorno);
+                return;
+            }
+
+            string statusPartida = Jogo.VerificarPartida(idPartida);
+
+            if (string.IsNullOrWhiteSpace(statusPartida))
+            {
+                MessageBox.Show("Não foi possível verificar o status da partida.");
+                return;
+            }
+
+            string[] dadosPartida = statusPartida.Split(',');
+
+            if (dadosPartida.Length < 5)
+            {
+                MessageBox.Show("Retorno da partida em formato inválido.");
+                return;
+            }
+
+            string idJogadorDado = dadosPartida[3].Trim();
+            string faceDado = dadosPartida[4].Trim();
+
+            string nomeFace = "";
+
+            if (faceDado == "AL")
+                nomeFace = "Alimentação";
+            else if (faceDado == "FL")
+                nomeFace = "Floresta";
+            else if (faceDado == "PR")
+                nomeFace = "Pradaria";
+            else if (faceDado == "TI")
+                nomeFace = "Tiranossauro Rex";
+            else if (faceDado == "VZ")
+                nomeFace = "Cercado Vazio";
+            else if (faceDado == "WC")
+                nomeFace = "Banheiros";
+            else
+                nomeFace = faceDado;
+
+            lblRodada.Text = "O jogador " + idJogadorDado + " rolou o dado, e caiu o lado " + nomeFace;
+
+            lblStatusPartida.Text = "Partida iniciada com sucesso!";
+            lblStatusPartida.ForeColor = Color.Green;
         }
 
 
         private void btnListar_Click(object sender, EventArgs e)
         {
-            try
+            int idPartida;
+            if (!int.TryParse(lblPartida.Text, out idPartida))
             {
-                int idPartida = int.Parse(lbPartida.Text);
-                int idJogador = int.Parse(lbId.Text);
-                string senhaJogador = lbSenha.Text;
-
-                string statusPartida = Jogo.VerificarPartida(idPartida);
-                string[] verificarPartida = statusPartida.Split('.');
-                lblRodada.Text = verificarPartida[1];
-
-                string statusTurno = Jogo.VerificarTurno(idPartida);
-                string[] verificarTurno = statusTurno.Split('.');
-
-                lstVerficarTurno.Items.Clear();
-                foreach (string turno in verificarPartida)
-                {
-                    lstVerficarTurno.Items.Add(turno);
-                }
-
-                string retorno = Jogo.ExibirMao(idJogador, senhaJogador);
-
-                string[] dinossauros = retorno.Split('\n');
-                lstDinossauros.Items.Clear();
-                foreach (string dinossauro in dinossauros)
-                {
-                    lstDinossauros.Items.Add(dinossauro);
-                }
-
-                if (string.IsNullOrWhiteSpace(retorno))
-                {
-                    MessageBox.Show("Sem resposta do servidor");
-                    return;
-                }
-
-                if (retorno.StartsWith("ERRO"))
-                {
-                    MessageBox.Show(retorno);
-                    return;
-                }
+                MessageBox.Show("ID da partida inválido.");
+                return;
             }
-            catch (Exception ex)
+
+            int idJogador;
+            if (!int.TryParse(lblIDJogadorPrincipal.Text, out idJogador))
             {
-                MessageBox.Show("Erro ao listar: " + ex.Message);
+                MessageBox.Show("ID do jogador inválido.");
+                return;
             }
+
+            string senhaJogador = lblKeyJogadorPrincipal.Text;
+
+            if (string.IsNullOrWhiteSpace(senhaJogador))
+            {
+                MessageBox.Show("Senha do jogador não informada.");
+                return;
+            }
+
+            string statusPartida = Jogo.VerificarPartida(idPartida);
+
+            if (string.IsNullOrWhiteSpace(statusPartida))
+            {
+                MessageBox.Show("Erro ao verificar partida.");
+                return;
+            }
+
+            string retorno = Jogo.ExibirMao(idJogador, senhaJogador);
+
+            if (string.IsNullOrWhiteSpace(retorno))
+            {
+                MessageBox.Show("Sem resposta do servidor");
+                return;
+            }
+
+            if (retorno.StartsWith("ERRO"))
+            {
+                MessageBox.Show(retorno);
+                return;
+            }
+
+            string[] dinossauros = retorno.Split('\n');
+
+            lstDinossauros.Items.Clear();
+            foreach (string dinossauro in dinossauros)
+            {
+                if (!string.IsNullOrWhiteSpace(dinossauro))
+                    lstDinossauros.Items.Add(dinossauro.Trim());
+            }
+        }
+
+        private void ValidarTurno()
+        {
+            int idPartida;
+            if (!int.TryParse(lblPartida.Text, out idPartida))
+            {
+                MessageBox.Show("ID da partida inválido.");
+                return;
+            }
+
+            string statusTurno = Jogo.VerificarTurno(idPartida);
+
+            if (string.IsNullOrWhiteSpace(statusTurno))
+            {
+                MessageBox.Show("Erro ao verificar turno.");
+                return;
+            }
+
+            if (statusTurno.StartsWith("ERRO"))
+            {
+                MessageBox.Show(statusTurno);
+                return;
+            }
+
+            string[] verificarTurno = statusTurno.Split('.');
+
+            lstVerficarTurno.Items.Clear();
+            foreach (string turno in verificarTurno)
+            {
+                if (!string.IsNullOrWhiteSpace(turno))
+                    lstVerficarTurno.Items.Add(turno.Trim());
+            }
+        }
+
+        private void btnValidarTurno_Click(object sender, EventArgs e)
+        {
+            ValidarTurno();
         }
 
         private void btnJogar_Click(object sender, EventArgs e)
         {
-            int idJogador = int.Parse(lbId.Text);
-            string senhaJogador = lbSenha.Text;
-            int idPartida = int.Parse(lbPartida.Text);
+            int idJogador = int.Parse(lblIDJogadorPrincipal.Text);
+            string senhaJogador = lblKeyJogadorPrincipal.Text;
+            int idPartida = int.Parse(lblPartida.Text);
             string dinossauroSelecionado = txtDinossauro.Text;
             string cercadoSelecionado = txtCercado.Text;
 

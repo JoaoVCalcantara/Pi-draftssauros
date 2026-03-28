@@ -16,8 +16,7 @@ namespace Pi_3
         public int Selected {  get; set; }
         public string Versao { get; set; }
         public string Equipe { get; set; }
-        string idPartidaSelecionada = "0"; 
-        public string IdPartidaSelecionada { get; set; }
+        public string idPartidaSelecionada = "0"; 
 
 
 
@@ -94,6 +93,7 @@ namespace Pi_3
                 statusFormatado = "Desconhecido";
 
             label1.Text = idPartida.ToString();
+            idPartidaSelecionada = idPartida.ToString();
             label2.Text = nomePartida;
             label3.Text = data;
             label12.Text = statusFormatado;
@@ -172,7 +172,7 @@ namespace Pi_3
             btn.Enabled = false;
 
             string retorno = Jogo.CriarPartida(nome, senha, grupo);
-            IdPartidaSelecionada = retorno;
+            idPartidaSelecionada = retorno;
 
             if (string.IsNullOrWhiteSpace(retorno))
             {
@@ -277,6 +277,7 @@ namespace Pi_3
 
         private void btnSelecionarPartida_Click(object sender, EventArgs e)
         {
+            idPartidaSelecionada = label1.Text;
             Close();
         }
     }

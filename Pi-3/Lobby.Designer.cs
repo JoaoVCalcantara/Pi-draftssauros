@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lobby));
             this.button1 = new System.Windows.Forms.Button();
-            this.lbPartida = new System.Windows.Forms.Label();
-            this.lbSenha = new System.Windows.Forms.Label();
-            this.lbId = new System.Windows.Forms.Label();
+            this.lblPartida = new System.Windows.Forms.Label();
+            this.lblKeyJogadorPrincipal = new System.Windows.Forms.Label();
+            this.lblIDJogadorPrincipal = new System.Windows.Forms.Label();
             this.btnIniciarPartida = new System.Windows.Forms.Button();
             this.btnListar = new System.Windows.Forms.Button();
             this.lstDinossauros = new System.Windows.Forms.ListBox();
@@ -53,14 +53,23 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnEntrarJogadorPrincipal = new System.Windows.Forms.Button();
+            this.txtNomeJogadorPrincipal = new System.Windows.Forms.TextBox();
+            this.txtSenhaPartida = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.lblStatusJogadorPrincipal = new System.Windows.Forms.Label();
+            this.lblStatusPartida = new System.Windows.Forms.Label();
+            this.btnValidarTurno = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -74,33 +83,33 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // lbPartida
+            // lblPartida
             // 
-            this.lbPartida.AutoSize = true;
-            this.lbPartida.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbPartida.Location = new System.Drawing.Point(222, 7);
-            this.lbPartida.Name = "lbPartida";
-            this.lbPartida.Size = new System.Drawing.Size(176, 15);
-            this.lbPartida.TabIndex = 1;
-            this.lbPartida.Text = "Nenhuma Partida Selecionada";
+            this.lblPartida.AutoSize = true;
+            this.lblPartida.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPartida.Location = new System.Drawing.Point(229, 11);
+            this.lblPartida.Name = "lblPartida";
+            this.lblPartida.Size = new System.Drawing.Size(159, 13);
+            this.lblPartida.TabIndex = 1;
+            this.lblPartida.Text = "Selecione uma partida no Lobby";
             // 
-            // lbSenha
+            // lblKeyJogadorPrincipal
             // 
-            this.lbSenha.AutoSize = true;
-            this.lbSenha.Location = new System.Drawing.Point(243, 59);
-            this.lbSenha.Name = "lbSenha";
-            this.lbSenha.Size = new System.Drawing.Size(10, 13);
-            this.lbSenha.TabIndex = 2;
-            this.lbSenha.Text = "-";
+            this.lblKeyJogadorPrincipal.AutoSize = true;
+            this.lblKeyJogadorPrincipal.Location = new System.Drawing.Point(243, 59);
+            this.lblKeyJogadorPrincipal.Name = "lblKeyJogadorPrincipal";
+            this.lblKeyJogadorPrincipal.Size = new System.Drawing.Size(10, 13);
+            this.lblKeyJogadorPrincipal.TabIndex = 2;
+            this.lblKeyJogadorPrincipal.Text = "-";
             // 
-            // lbId
+            // lblIDJogadorPrincipal
             // 
-            this.lbId.AutoSize = true;
-            this.lbId.Location = new System.Drawing.Point(229, 34);
-            this.lbId.Name = "lbId";
-            this.lbId.Size = new System.Drawing.Size(10, 13);
-            this.lbId.TabIndex = 3;
-            this.lbId.Text = "-";
+            this.lblIDJogadorPrincipal.AutoSize = true;
+            this.lblIDJogadorPrincipal.Location = new System.Drawing.Point(229, 34);
+            this.lblIDJogadorPrincipal.Name = "lblIDJogadorPrincipal";
+            this.lblIDJogadorPrincipal.Size = new System.Drawing.Size(10, 13);
+            this.lblIDJogadorPrincipal.TabIndex = 3;
+            this.lblIDJogadorPrincipal.Text = "-";
             // 
             // btnIniciarPartida
             // 
@@ -134,10 +143,11 @@
             // lblRodada
             // 
             this.lblRodada.AutoSize = true;
-            this.lblRodada.Location = new System.Drawing.Point(544, 162);
+            this.lblRodada.Location = new System.Drawing.Point(422, 162);
             this.lblRodada.Name = "lblRodada";
-            this.lblRodada.Size = new System.Drawing.Size(0, 13);
+            this.lblRodada.Size = new System.Drawing.Size(10, 13);
             this.lblRodada.TabIndex = 7;
+            this.lblRodada.Text = "-";
             // 
             // lstVerficarTurno
             // 
@@ -243,9 +253,9 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnIniciarPartida);
-            this.groupBox1.Controls.Add(this.lbId);
-            this.groupBox1.Controls.Add(this.lbSenha);
-            this.groupBox1.Controls.Add(this.lbPartida);
+            this.groupBox1.Controls.Add(this.lblIDJogadorPrincipal);
+            this.groupBox1.Controls.Add(this.lblKeyJogadorPrincipal);
+            this.groupBox1.Controls.Add(this.lblPartida);
             this.groupBox1.Location = new System.Drawing.Point(12, 93);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(404, 82);
@@ -287,23 +297,13 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.btnValidarTurno);
             this.groupBox5.Controls.Add(this.lstVerficarTurno);
             this.groupBox5.Location = new System.Drawing.Point(284, 289);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(132, 139);
             this.groupBox5.TabIndex = 23;
             this.groupBox5.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(15, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Verificar Turno";
             // 
             // pictureBox1
             // 
@@ -317,11 +317,97 @@
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
             // 
+            // btnEntrarJogadorPrincipal
+            // 
+            this.btnEntrarJogadorPrincipal.Location = new System.Drawing.Point(260, 16);
+            this.btnEntrarJogadorPrincipal.Name = "btnEntrarJogadorPrincipal";
+            this.btnEntrarJogadorPrincipal.Size = new System.Drawing.Size(119, 54);
+            this.btnEntrarJogadorPrincipal.TabIndex = 25;
+            this.btnEntrarJogadorPrincipal.Text = "Adicionar Jogador Principal";
+            this.btnEntrarJogadorPrincipal.UseVisualStyleBackColor = true;
+            this.btnEntrarJogadorPrincipal.Click += new System.EventHandler(this.btnEntrarJogadorPrincipal_Click);
+            // 
+            // txtNomeJogadorPrincipal
+            // 
+            this.txtNomeJogadorPrincipal.Location = new System.Drawing.Point(144, 16);
+            this.txtNomeJogadorPrincipal.Name = "txtNomeJogadorPrincipal";
+            this.txtNomeJogadorPrincipal.Size = new System.Drawing.Size(100, 20);
+            this.txtNomeJogadorPrincipal.TabIndex = 26;
+            // 
+            // txtSenhaPartida
+            // 
+            this.txtSenhaPartida.Location = new System.Drawing.Point(144, 50);
+            this.txtSenhaPartida.Name = "txtSenhaPartida";
+            this.txtSenhaPartida.Size = new System.Drawing.Size(100, 20);
+            this.txtSenhaPartida.TabIndex = 27;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(133, 13);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Nome do jogador principal:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(47, 53);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(91, 13);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Senha da partida:";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.label7);
+            this.groupBox6.Controls.Add(this.txtSenhaPartida);
+            this.groupBox6.Controls.Add(this.txtNomeJogadorPrincipal);
+            this.groupBox6.Controls.Add(this.btnEntrarJogadorPrincipal);
+            this.groupBox6.Location = new System.Drawing.Point(221, 8);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(387, 79);
+            this.groupBox6.TabIndex = 30;
+            this.groupBox6.TabStop = false;
+            // 
+            // lblStatusJogadorPrincipal
+            // 
+            this.lblStatusJogadorPrincipal.AutoSize = true;
+            this.lblStatusJogadorPrincipal.Location = new System.Drawing.Point(614, 45);
+            this.lblStatusJogadorPrincipal.Name = "lblStatusJogadorPrincipal";
+            this.lblStatusJogadorPrincipal.Size = new System.Drawing.Size(10, 13);
+            this.lblStatusJogadorPrincipal.TabIndex = 31;
+            this.lblStatusJogadorPrincipal.Text = "-";
+            // 
+            // lblStatusPartida
+            // 
+            this.lblStatusPartida.AutoSize = true;
+            this.lblStatusPartida.Location = new System.Drawing.Point(422, 130);
+            this.lblStatusPartida.Name = "lblStatusPartida";
+            this.lblStatusPartida.Size = new System.Drawing.Size(10, 13);
+            this.lblStatusPartida.TabIndex = 32;
+            this.lblStatusPartida.Text = "-";
+            // 
+            // btnValidarTurno
+            // 
+            this.btnValidarTurno.Location = new System.Drawing.Point(4, 11);
+            this.btnValidarTurno.Name = "btnValidarTurno";
+            this.btnValidarTurno.Size = new System.Drawing.Size(122, 23);
+            this.btnValidarTurno.TabIndex = 33;
+            this.btnValidarTurno.Text = "Validar Turno";
+            this.btnValidarTurno.UseVisualStyleBackColor = true;
+            this.btnValidarTurno.Click += new System.EventHandler(this.btnValidarTurno_Click);
+            // 
             // Lobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblStatusPartida);
+            this.Controls.Add(this.lblStatusJogadorPrincipal);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -341,8 +427,9 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,9 +438,9 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label lbPartida;
-        private System.Windows.Forms.Label lbSenha;
-        private System.Windows.Forms.Label lbId;
+        private System.Windows.Forms.Label lblPartida;
+        private System.Windows.Forms.Label lblKeyJogadorPrincipal;
+        private System.Windows.Forms.Label lblIDJogadorPrincipal;
         private System.Windows.Forms.Button btnIniciarPartida;
         private System.Windows.Forms.Button btnListar;
         private System.Windows.Forms.ListBox lstDinossauros;
@@ -374,7 +461,15 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnEntrarJogadorPrincipal;
+        private System.Windows.Forms.TextBox txtNomeJogadorPrincipal;
+        private System.Windows.Forms.TextBox txtSenhaPartida;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label lblStatusJogadorPrincipal;
+        private System.Windows.Forms.Label lblStatusPartida;
+        private System.Windows.Forms.Button btnValidarTurno;
     }
 }
