@@ -155,6 +155,37 @@ private void button1_Click(object sender, EventArgs e)
             }
 
             string idJogadorDado = dadosPartida[3].Trim();
+
+            string nomeJogadorDado = idJogadorDado;
+
+            string jogadores = Jogo.ListarJogadores(idPartida);
+
+            if (!string.IsNullOrWhiteSpace(jogadores) && !jogadores.StartsWith("ERRO"))
+            {
+                jogadores = jogadores.Replace("\r", "");
+                string[] listaJogadores = jogadores.Split('\n');
+
+                foreach (string j in listaJogadores)
+                {
+                    if (!string.IsNullOrWhiteSpace(j))
+                    {
+                        string[] partes = j.Split(',');
+
+                        if (partes.Length >= 2)
+                        {
+                            string id = partes[0].Trim();
+                            string nome = partes[1].Trim();
+
+                            if (id == idJogadorDado)
+                            {
+                                nomeJogadorDado = nome;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
             string faceDado = dadosPartida[4].Trim();
 
             string nomeFace = "";
@@ -176,7 +207,7 @@ private void button1_Click(object sender, EventArgs e)
 
             string turno = dadosPartida[1].Trim();
 
-            lblRodada.Text = $"Turno {turno}: O jogador {idJogadorDado} rolou o dado e caiu {nomeFace}";
+            lblRodada.Text = $"Turno {turno}: O jogador {nomeJogadorDado} rolou o dado e caiu {nomeFace}";
 
             lblStatusPartida.Text = "Partida iniciada com sucesso!";
             lblStatusPartida.ForeColor = Color.Green;
