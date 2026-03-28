@@ -30,7 +30,7 @@ namespace Pi_3
             f.AtualizarTela();
             f.ShowDialog();
 
-            lbPartida.Text = f.idPartidaSelecionada.ToString();
+            lbPartida.Text = f.IdPartidaSelecionada;
             //id do jogador
             //senha do jogador
 
@@ -51,7 +51,6 @@ namespace Pi_3
             {
                 int idJogador = int.Parse(lbId.Text);
                 string senhaJogador = lbSenha.Text;
-                int idPartida = int.Parse(lbPartida.Text);
 
                 string retorno = Jogo.Iniciar(idJogador, senhaJogador);
 
@@ -69,18 +68,6 @@ namespace Pi_3
 
                 MessageBox.Show("Partida iniciada com sucesso!");
 
-                string statusPartida = Jogo.VerificarPartida(idPartida);
-                string[] verificarPartida = statusPartida.Split('\n');
-                lblRodada.Text = verificarPartida[1];
-
-                string statusTurno = Jogo.VerificarTurno(idPartida);
-                string[] verificarTurno = statusTurno.Split('\n');
-
-                foreach (string turno in verificarTurno)
-                {
-                    lstVerficarTurno.Items.Add(turno);
-                }
-
                 
             }
             catch (Exception ex)
@@ -96,16 +83,30 @@ namespace Pi_3
         {
             try
             {
+                int idPartida = int.Parse(lbPartida.Text);
                 int idJogador = int.Parse(lbId.Text);
                 string senhaJogador = lbSenha.Text;
+
+                string statusPartida = Jogo.VerificarPartida(idPartida);
+                string[] verificarPartida = statusPartida.Split('.');
+                lblRodada.Text = verificarPartida[1];
+
+                string statusTurno = Jogo.VerificarTurno(idPartida);
+                string[] verificarTurno = statusTurno.Split('.');
+
+                lstVerficarTurno.Items.Clear();
+                foreach (string turno in verificarPartida)
+                {
+                    lstVerficarTurno.Items.Add(turno);
+                }
 
                 string retorno = Jogo.ExibirMao(idJogador, senhaJogador);
 
                 string[] dinossauros = retorno.Split('\n');
                 lstDinossauros.Items.Clear();
-                for (int i = 0; i < dinossauros.Length; i++)
+                foreach (string dinossauro in dinossauros)
                 {
-                    lstDinossauros.Items.Add(dinossauros[i]);
+                    lstDinossauros.Items.Add(dinossauro);
                 }
 
                 if (string.IsNullOrWhiteSpace(retorno))
@@ -135,42 +136,41 @@ namespace Pi_3
             string cercadoSelecionado = txtCercado.Text;
 
             string statusPartida = Jogo.VerificarPartida(idPartida);
-            //não sei qual a saída de VerificarPartida, então o valor do Split não está definido ainda
-            string[] verificarPartida = statusPartida.Split(' ');
+            statusPartida = statusPartida.Replace("\r", "");
+            statusPartida = statusPartida.Replace("\n", "");
+            string[] verificarPartida = statusPartida.Split(',');
+
+            string statusMao = Jogo.ExibirMao(idJogador, senhaJogador);
+            statusMao = statusMao.Replace("\r", "");
+            string[] exibirMao = statusMao.Split('\n');
 
             string statusTabuleiro = Jogo.ExibirTabuleiro(idJogador, senhaJogador);
             string[] exibirTabuleiro = statusTabuleiro.Split('\n');
-
-            string statusMao = Jogo.ExibirMao(idJogador, senhaJogador);
-            string[] exibirMao = statusMao.Split('\n');
 
             List<string> dinossaurosNoTabuleiro = new List<string>();
             List<string> cercadosNoTabuleiro = new List<string>();
             List<string> dinossaurosNaMao = new List<string>();
 
             lstTabuleiro.Items.Clear();
-            foreach(string itemTabuleiro in exibirTabuleiro)
+            foreach (string itemTabuleiro in exibirTabuleiro)
             {
                 lstTabuleiro.Items.Add(itemTabuleiro);
             }
 
-            foreach (string mao in exibirMao)
+            foreach (string dinossauro in exibirMao)
             {
-                string[] infoMao = mao.Split(' ');
-                dinossaurosNaMao.Add(infoMao[0]);
+                exibirMao = dinossauro.Split(',');
+            }
+
+            for (int i = 1; i < exibirMao.Length - 1; i++)
+            {
+                dinossaurosNaMao.Add(exibirMao[i]);
             }
 
             foreach (string cercado in exibirTabuleiro)
             {
                 string[] infoCercados = cercado.Split(' ');
                 cercadosNoTabuleiro.Add(infoCercados[0]);
-
-            }
-
-            foreach (string dinossauro in exibirTabuleiro)
-            {
-                string[] infoDinossauros = dinossauro.Split(' ');
-                dinossaurosNoTabuleiro.Add(infoDinossauros[1]);
             }
 
             string dadoSorteado = verificarPartida[verificarPartida.Length - 1];

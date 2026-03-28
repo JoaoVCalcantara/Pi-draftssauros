@@ -13,9 +13,13 @@ namespace Pi_3
 {
     public partial class Form1 : Form
     {
+        public int Selected {  get; set; }
         public string Versao { get; set; }
         public string Equipe { get; set; }
-        public int idPartidaSelecionada { get; set; }
+        string idPartidaSelecionada = "0"; 
+        public string IdPartidaSelecionada { get; set; }
+
+
 
         public Form1()
         {
@@ -168,6 +172,7 @@ namespace Pi_3
             btn.Enabled = false;
 
             string retorno = Jogo.CriarPartida(nome, senha, grupo);
+            IdPartidaSelecionada = retorno;
 
             if (string.IsNullOrWhiteSpace(retorno))
             {
@@ -267,17 +272,11 @@ namespace Pi_3
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            idPartidaSelecionada = 0;
             Close();
         }
 
         private void btnSelecionarPartida_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(label1.Text, out int id))
-            {
-                idPartidaSelecionada = id;
-            }
-
             Close();
         }
     }

@@ -46,7 +46,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 1;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // cboJogadores
             // 
@@ -64,7 +63,6 @@
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.Size = new System.Drawing.Size(100, 20);
             this.txtSenha.TabIndex = 3;
-            this.txtSenha.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 

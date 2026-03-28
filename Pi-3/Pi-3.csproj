@@ -67,9 +67,7 @@
     <Compile Include="Lobby.Designer.cs">
       <DependentUpon>Lobby.cs</DependentUpon>
     </Compile>
-    <Compile Include="Partida.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Partida.cs" />
     <Compile Include="Partida.Designer.cs">
       <DependentUpon>Partida.cs</DependentUpon>
     </Compile>

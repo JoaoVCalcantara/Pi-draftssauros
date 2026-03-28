@@ -22,6 +22,8 @@ namespace Pi_3
             {
                 txtSenha?.Clear();
 
+                Form1 f = new Form1();
+
                 string retorno = Jogo.ListarPartidas("T");
                 if (string.IsNullOrWhiteSpace(retorno) || retorno.StartsWith("ERRO", StringComparison.OrdinalIgnoreCase))
                 {
@@ -39,7 +41,7 @@ namespace Pi_3
                     cboJogadores.Items.Add(p);
 
                 if (cboJogadores.Items.Count > 0)
-                    cboJogadores.SelectedIndex = 0;
+                    cboJogadores.SelectedIndex = f.Selected;
 
                 txtSenha.Clear();
             }
@@ -106,10 +108,6 @@ namespace Pi_3
                 MessageBox.Show("Erro ao listar jogadores: " + ex.Message, "PI 3", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-        private void textBox2_TextChanged(object sender, EventArgs e) { }
-
-        private void textBox1_TextChanged(object sender, EventArgs e) { }
 
         private void btnAdicionar_Click(object sender, EventArgs e)
         {
