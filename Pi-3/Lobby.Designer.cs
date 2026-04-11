@@ -28,35 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lobby));
             this.button1 = new System.Windows.Forms.Button();
             this.lblPartida = new System.Windows.Forms.Label();
             this.lblKeyJogadorPrincipal = new System.Windows.Forms.Label();
             this.lblIDJogadorPrincipal = new System.Windows.Forms.Label();
             this.btnIniciarPartida = new System.Windows.Forms.Button();
-            this.btnListar = new System.Windows.Forms.Button();
-            this.lstDinossauros = new System.Windows.Forms.ListBox();
             this.lblRodada = new System.Windows.Forms.Label();
-            this.lstVerficarTurno = new System.Windows.Forms.ListBox();
-            this.btnJogar = new System.Windows.Forms.Button();
-            this.txtDinossauro = new System.Windows.Forms.TextBox();
-            this.txtCercado = new System.Windows.Forms.TextBox();
-            this.lblDinossauro = new System.Windows.Forms.Label();
-            this.lblCercado = new System.Windows.Forms.Label();
-            this.lstTabuleiro = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnVerificarTabuleiro = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtIDJogadorTabuleiro = new System.Windows.Forms.TextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btnValidarTurno = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnEntrarJogadorPrincipal = new System.Windows.Forms.Button();
             this.txtNomeJogadorPrincipal = new System.Windows.Forms.TextBox();
             this.txtSenhaPartida = new System.Windows.Forms.TextBox();
@@ -65,15 +46,9 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.lblStatusJogadorPrincipal = new System.Windows.Forms.Label();
             this.lblStatusPartida = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,25 +102,6 @@
             this.btnIniciarPartida.UseVisualStyleBackColor = true;
             this.btnIniciarPartida.Click += new System.EventHandler(this.btnIniciarPartida_Click);
             // 
-            // btnListar
-            // 
-            this.btnListar.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnListar.Location = new System.Drawing.Point(10, 12);
-            this.btnListar.Name = "btnListar";
-            this.btnListar.Size = new System.Drawing.Size(112, 24);
-            this.btnListar.TabIndex = 5;
-            this.btnListar.Text = "Listar Dinossauros";
-            this.btnListar.UseVisualStyleBackColor = true;
-            this.btnListar.Click += new System.EventHandler(this.btnListar_Click);
-            // 
-            // lstDinossauros
-            // 
-            this.lstDinossauros.FormattingEnabled = true;
-            this.lstDinossauros.Location = new System.Drawing.Point(10, 50);
-            this.lstDinossauros.Name = "lstDinossauros";
-            this.lstDinossauros.Size = new System.Drawing.Size(112, 95);
-            this.lstDinossauros.TabIndex = 6;
-            // 
             // lblRodada
             // 
             this.lblRodada.AutoSize = true;
@@ -154,65 +110,6 @@
             this.lblRodada.Size = new System.Drawing.Size(10, 13);
             this.lblRodada.TabIndex = 7;
             this.lblRodada.Text = "-";
-            // 
-            // lstVerficarTurno
-            // 
-            this.lstVerficarTurno.FormattingEnabled = true;
-            this.lstVerficarTurno.Location = new System.Drawing.Point(6, 38);
-            this.lstVerficarTurno.Name = "lstVerficarTurno";
-            this.lstVerficarTurno.Size = new System.Drawing.Size(120, 95);
-            this.lstVerficarTurno.TabIndex = 8;
-            // 
-            // btnJogar
-            // 
-            this.btnJogar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnJogar.Location = new System.Drawing.Point(120, 30);
-            this.btnJogar.Name = "btnJogar";
-            this.btnJogar.Size = new System.Drawing.Size(130, 67);
-            this.btnJogar.TabIndex = 9;
-            this.btnJogar.Text = "Fazer Jogada";
-            this.btnJogar.UseVisualStyleBackColor = true;
-            this.btnJogar.Click += new System.EventHandler(this.btnJogar_Click);
-            // 
-            // txtDinossauro
-            // 
-            this.txtDinossauro.Location = new System.Drawing.Point(6, 30);
-            this.txtDinossauro.Name = "txtDinossauro";
-            this.txtDinossauro.Size = new System.Drawing.Size(100, 20);
-            this.txtDinossauro.TabIndex = 10;
-            // 
-            // txtCercado
-            // 
-            this.txtCercado.Location = new System.Drawing.Point(7, 77);
-            this.txtCercado.Name = "txtCercado";
-            this.txtCercado.Size = new System.Drawing.Size(100, 20);
-            this.txtCercado.TabIndex = 11;
-            // 
-            // lblDinossauro
-            // 
-            this.lblDinossauro.AutoSize = true;
-            this.lblDinossauro.Location = new System.Drawing.Point(4, 14);
-            this.lblDinossauro.Name = "lblDinossauro";
-            this.lblDinossauro.Size = new System.Drawing.Size(63, 13);
-            this.lblDinossauro.TabIndex = 12;
-            this.lblDinossauro.Text = "Dinossauro:";
-            // 
-            // lblCercado
-            // 
-            this.lblCercado.AutoSize = true;
-            this.lblCercado.Location = new System.Drawing.Point(4, 61);
-            this.lblCercado.Name = "lblCercado";
-            this.lblCercado.Size = new System.Drawing.Size(50, 13);
-            this.lblCercado.TabIndex = 13;
-            this.lblCercado.Text = "Cercado:";
-            // 
-            // lstTabuleiro
-            // 
-            this.lstTabuleiro.FormattingEnabled = true;
-            this.lstTabuleiro.Location = new System.Drawing.Point(6, 64);
-            this.lstTabuleiro.Name = "lstTabuleiro";
-            this.lstTabuleiro.Size = new System.Drawing.Size(120, 69);
-            this.lstTabuleiro.TabIndex = 15;
             // 
             // label2
             // 
@@ -258,101 +155,6 @@
             this.groupBox1.Size = new System.Drawing.Size(404, 82);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.lstDinossauros);
-            this.groupBox2.Controls.Add(this.btnListar);
-            this.groupBox2.Location = new System.Drawing.Point(12, 181);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(132, 155);
-            this.groupBox2.TabIndex = 20;
-            this.groupBox2.TabStop = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.lblCercado);
-            this.groupBox3.Controls.Add(this.lblDinossauro);
-            this.groupBox3.Controls.Add(this.txtCercado);
-            this.groupBox3.Controls.Add(this.txtDinossauro);
-            this.groupBox3.Controls.Add(this.btnJogar);
-            this.groupBox3.Location = new System.Drawing.Point(150, 181);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(266, 108);
-            this.groupBox3.TabIndex = 21;
-            this.groupBox3.TabStop = false;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.btnVerificarTabuleiro);
-            this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Controls.Add(this.txtIDJogadorTabuleiro);
-            this.groupBox4.Controls.Add(this.lstTabuleiro);
-            this.groupBox4.Location = new System.Drawing.Point(150, 289);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(132, 139);
-            this.groupBox4.TabIndex = 22;
-            this.groupBox4.TabStop = false;
-            // 
-            // btnVerificarTabuleiro
-            // 
-            this.btnVerificarTabuleiro.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVerificarTabuleiro.Location = new System.Drawing.Point(3, 38);
-            this.btnVerificarTabuleiro.Name = "btnVerificarTabuleiro";
-            this.btnVerificarTabuleiro.Size = new System.Drawing.Size(122, 23);
-            this.btnVerificarTabuleiro.TabIndex = 34;
-            this.btnVerificarTabuleiro.Text = "Validar Tabuleiro";
-            this.btnVerificarTabuleiro.UseVisualStyleBackColor = true;
-            this.btnVerificarTabuleiro.Click += new System.EventHandler(this.btnVerificarTabuleiro_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(21, 13);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "ID:";
-            // 
-            // txtIDJogadorTabuleiro
-            // 
-            this.txtIDJogadorTabuleiro.Location = new System.Drawing.Point(35, 11);
-            this.txtIDJogadorTabuleiro.Name = "txtIDJogadorTabuleiro";
-            this.txtIDJogadorTabuleiro.Size = new System.Drawing.Size(90, 20);
-            this.txtIDJogadorTabuleiro.TabIndex = 33;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.btnValidarTurno);
-            this.groupBox5.Controls.Add(this.lstVerficarTurno);
-            this.groupBox5.Location = new System.Drawing.Point(284, 289);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(132, 139);
-            this.groupBox5.TabIndex = 23;
-            this.groupBox5.TabStop = false;
-            // 
-            // btnValidarTurno
-            // 
-            this.btnValidarTurno.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnValidarTurno.Location = new System.Drawing.Point(4, 11);
-            this.btnValidarTurno.Name = "btnValidarTurno";
-            this.btnValidarTurno.Size = new System.Drawing.Size(122, 23);
-            this.btnValidarTurno.TabIndex = 33;
-            this.btnValidarTurno.Text = "Validar Turno";
-            this.btnValidarTurno.UseVisualStyleBackColor = true;
-            this.btnValidarTurno.Click += new System.EventHandler(this.btnValidarTurno_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(422, 187);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(241, 241);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 24;
-            this.pictureBox1.TabStop = false;
             // 
             // btnEntrarJogadorPrincipal
             // 
@@ -428,19 +230,10 @@
             this.lblStatusPartida.TabIndex = 32;
             this.lblStatusPartida.Text = "-";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(112, 425);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(170, 13);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "Validar tabuleiro (por id do jogador)";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(19, 425);
+            this.label8.Location = new System.Drawing.Point(753, 12);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(35, 13);
             this.label8.TabIndex = 34;
@@ -449,7 +242,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(731, 425);
+            this.label9.Location = new System.Drawing.Point(724, 162);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 35;
@@ -459,18 +252,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 187);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.lblStatusPartida);
             this.Controls.Add(this.lblStatusJogadorPrincipal);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblRodada);
             this.Controls.Add(this.button1);
@@ -479,13 +266,6 @@
             this.Load += new System.EventHandler(this.Lobby_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
@@ -500,25 +280,11 @@
         private System.Windows.Forms.Label lblKeyJogadorPrincipal;
         private System.Windows.Forms.Label lblIDJogadorPrincipal;
         private System.Windows.Forms.Button btnIniciarPartida;
-        private System.Windows.Forms.Button btnListar;
-        private System.Windows.Forms.ListBox lstDinossauros;
         private System.Windows.Forms.Label lblRodada;
-        private System.Windows.Forms.ListBox lstVerficarTurno;
-        private System.Windows.Forms.Button btnJogar;
-        private System.Windows.Forms.TextBox txtDinossauro;
-        private System.Windows.Forms.TextBox txtCercado;
-        private System.Windows.Forms.Label lblDinossauro;
-        private System.Windows.Forms.Label lblCercado;
-        private System.Windows.Forms.ListBox lstTabuleiro;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnEntrarJogadorPrincipal;
         private System.Windows.Forms.TextBox txtNomeJogadorPrincipal;
         private System.Windows.Forms.TextBox txtSenhaPartida;
@@ -527,11 +293,6 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label lblStatusJogadorPrincipal;
         private System.Windows.Forms.Label lblStatusPartida;
-        private System.Windows.Forms.Button btnValidarTurno;
-        private System.Windows.Forms.TextBox txtIDJogadorTabuleiro;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnVerificarTabuleiro;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
     }
