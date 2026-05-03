@@ -14,6 +14,8 @@ namespace Pi_3
         public string SenhaJogadorPrincipal { get; set; }
         public string InfoRodada { get; set; }
         public string NomeJogadorPrincipal { get; set; }
+        private bool _processandoTick = false;
+
 
         private static readonly Dictionary<string, Point> PosicoesCercados = new Dictionary<string, Point>
         {
@@ -91,7 +93,7 @@ namespace Pi_3
             jogouEsteturno = false;
 
             timerAutomacao = new Timer();
-            timerAutomacao.Interval = 2000;
+            timerAutomacao.Interval = 3000;
             timerAutomacao.Tick += TimerAutomacao_Tick;
             timerAutomacao.Start();
 
@@ -99,60 +101,115 @@ namespace Pi_3
             lblStatusJogada.ForeColor = Color.Blue;
         }
 
+        private int _ticksSemJogar = 0;
+        private const int MAX_TICKS_SEM_JOGAR = 5; // 5 ticks × 3s = 15s sem jogar → força Rio
+
         private void TimerAutomacao_Tick(object sender, EventArgs e)
         {
-            string statusPartida = Jogo.VerificarPartida(IdPartida);
-            if (string.IsNullOrWhiteSpace(statusPartida) || statusPartida.StartsWith("ERRO"))
+            // Evita execução simultânea do tick
+            if (_processandoTick) return;
+            _processandoTick = true;
+
+            try
             {
-                lblStatusJogada.Text = $"❌ Erro: {statusPartida}";
-                lblStatusJogada.ForeColor = Color.Red;
-                return;
+                string statusPartida = Jogo.VerificarPartida(IdPartida);
+                if (string.IsNullOrWhiteSpace(statusPartida) || statusPartida.StartsWith("ERRO"))
+                {
+                    lblStatusJogada.Text = $"❌ Erro: {statusPartida}";
+                    lblStatusJogada.ForeColor = Color.Red;
+                    return;
+                }
+
+                string[] d = statusPartida.Split(',');
+                if (d.Length < 5) return;
+
+                string statusGeral = d[0].Trim();
+                if (statusGeral == "E")
+                {
+                    timerAutomacao.Stop();
+                    lblStatusJogada.Text = "🏁 Partida encerrada!";
+                    lblStatusJogada.ForeColor = Color.DarkGreen;
+                    AtualizarHistorico();
+                    return;
+                }
+
+                string idJogadorComDado = d[3].Trim();
+                string faceDado = d[4].Trim();
+                int turnoAtual = 0;
+                int.TryParse(d[1].Trim(), out turnoAtual);
+
+                lblTurno.Text = $"{turnoAtual}";
+
+                if (ultimoTurnoVerificado != turnoAtual)
+                {
+                    ultimoTurnoVerificado = turnoAtual;
+                    jogouEsteturno = false;
+                    _ticksSemJogar = 0;
+                    CarregarMaoVisual();
+                }
+
+                if (jogouEsteturno)
+                {
+                    lblStatusJogada.Text = $"✔️ Turno {turnoAtual} | Aguardando próximo turno...";
+                    lblStatusJogada.ForeColor = Color.Gray;
+                    return;
+                }
+
+                if (idJogadorComDado != IdJogadorPrincipal.ToString())
+                {
+                    _ticksSemJogar++;
+                    lblStatusJogada.Text = $"⏳ Turno {turnoAtual} | Vez do jogador {idJogadorComDado} | ({_ticksSemJogar}/{MAX_TICKS_SEM_JOGAR})";
+                    lblStatusJogada.ForeColor = Color.DarkOrange;
+
+                    if (_ticksSemJogar >= MAX_TICKS_SEM_JOGAR)
+                    {
+                        lblStatusJogada.Text = "⚠️ Timeout! Tentando forçar jogada no Rio...";
+                        lblStatusJogada.ForeColor = Color.OrangeRed;
+
+                        CarregarMaoVisual();
+                        if (_maoSiglas.Count > 0)
+                        {
+                            string dinoFallback = CapitalizarSigla(_maoSiglas[0]);
+                            string retornoRio = Jogo.Jogar(IdJogadorPrincipal, SenhaJogadorPrincipal, dinoFallback, "RI");
+
+                            if (!string.IsNullOrWhiteSpace(retornoRio) && !retornoRio.StartsWith("ERRO"))
+                            {
+                                lblStatusJogada.Text = $"🌊 Timeout → Rio: {dinoFallback} | {retornoRio}";
+                                lblStatusJogada.ForeColor = Color.SteelBlue;
+                                jogouEsteturno = true;
+                                _ticksSemJogar = 0;
+                                RemoverDinoDaMao(dinoFallback);
+                                DesenharTabuleiroComDinos();
+                                AtualizarHistorico();
+                                AtualizarInfoPartida();
+                            }
+                            else
+                            {
+                                _ticksSemJogar = 0;
+                                lblStatusJogada.Text = $"❌ Timeout Rio falhou: {retornoRio}";
+                                lblStatusJogada.ForeColor = Color.Red;
+                            }
+                        }
+                        else
+                        {
+                            _ticksSemJogar = 0;
+                        }
+                    }
+                    return;
+                }
+
+                // É minha vez!
+                lblStatusJogada.Text = $"🎯 Turno {turnoAtual} | Dado: {faceDado} | É minha vez!";
+                lblStatusJogada.ForeColor = Color.DarkBlue;
+
+                jogouEsteturno = true;
+                _ticksSemJogar = 0;
+                FazerJogadaInteligente(faceDado);
             }
-
-            string[] d = statusPartida.Split(',');
-            if (d.Length < 5) return;
-
-            // Verifica se a partida encerrou
-            string statusGeral = d[0].Trim();
-            if (statusGeral == "E")
+            finally
             {
-                timerAutomacao.Stop();
-                lblStatusJogada.Text = "🏁 Partida encerrada!";
-                lblStatusJogada.ForeColor = Color.DarkGreen;
-                AtualizarHistorico();
-                return;
+                _processandoTick = false; // sempre libera ao final
             }
-
-            string idJogadorComDado = d[3].Trim();
-            string faceDado = d[4].Trim();
-            int turnoAtual = 0;
-            int.TryParse(d[1].Trim(), out turnoAtual);
-
-            lblTurno.Text = $"{turnoAtual}";
-
-            // Reseta flag quando turno muda
-            if (ultimoTurnoVerificado != turnoAtual)
-            {
-                ultimoTurnoVerificado = turnoAtual;
-                jogouEsteturno = false;
-                CarregarMaoVisual();
-            }
-
-            // Só joga se for a vez deste jogador
-            if (idJogadorComDado != IdJogadorPrincipal.ToString())
-            {
-                lblStatusJogada.Text = $"⏳ Turno {turnoAtual} | Aguardando jogador {idJogadorComDado}...";
-                lblStatusJogada.ForeColor = Color.DarkOrange;
-                return;
-            }
-
-            if (jogouEsteturno) return;
-
-            lblStatusJogada.Text = $"🎯 Turno {turnoAtual} | Dado: {faceDado} | É minha vez!";
-            lblStatusJogada.ForeColor = Color.DarkBlue;
-
-            jogouEsteturno = true;
-            FazerJogadaInteligente(faceDado);
         }
 
         private void FazerJogadaInteligente(string faceDado)
