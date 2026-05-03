@@ -56,6 +56,7 @@
             this.lblTurno = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAtualizarHistorico = new System.Windows.Forms.Button();
+            this.btn_auto = new System.Windows.Forms.Button();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -328,12 +329,23 @@
             this.btnAtualizarHistorico.UseVisualStyleBackColor = true;
             this.btnAtualizarHistorico.Click += new System.EventHandler(this.btnAtualizarHistorico_Click);
             // 
+            // btn_auto
+            // 
+            this.btn_auto.Location = new System.Drawing.Point(949, 414);
+            this.btn_auto.Name = "btn_auto";
+            this.btn_auto.Size = new System.Drawing.Size(126, 30);
+            this.btn_auto.TabIndex = 48;
+            this.btn_auto.Text = "Jogada Automatica";
+            this.btn_auto.UseVisualStyleBackColor = true;
+            this.btn_auto.Click += new System.EventHandler(this.btn_auto_Click);
+            // 
             // TelaJogo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1099, 531);
+            this.Controls.Add(this.btn_auto);
             this.Controls.Add(this.btnAtualizarHistorico);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblTurno);
@@ -393,5 +405,6 @@
         private System.Windows.Forms.Label lblTurno;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAtualizarHistorico;
+        private System.Windows.Forms.Button btn_auto;
     }
 }
