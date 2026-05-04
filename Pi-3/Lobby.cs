@@ -229,5 +229,111 @@ private void button1_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void btnVerTabuleiro_Click(object sender, EventArgs e)
+        {
+            {
+                int idPartida;
+                if (!int.TryParse(lblPartida.Text, out idPartida))
+                {
+                    MessageBox.Show("Selecione uma partida válida primeiro.");
+                    return;
+                }
+
+                int idJogador;
+                if (!int.TryParse(lblIDJogadorPrincipal.Text, out idJogador))
+                {
+                    MessageBox.Show("Entre na partida primeiro (clique em 'Entrar como Jogador').");
+                    return;
+                }
+
+                string senhaJogador = lblKeyJogadorPrincipal.Text;
+
+                if (string.IsNullOrWhiteSpace(senhaJogador))
+                {
+                    MessageBox.Show("Senha do jogador não encontrada. Entre na partida primeiro.");
+                    return;
+                }
+
+                // Verifica se a partida já existe e está em andamento
+                string statusPartida = Jogo.VerificarPartida(idPartida);
+
+                if (string.IsNullOrWhiteSpace(statusPartida) || statusPartida.StartsWith("ERRO"))
+                {
+                    MessageBox.Show("Partida não encontrada ou ainda não iniciada.");
+                    return;
+                }
+
+                string[] dadosPartida = statusPartida.Split(',');
+
+                if (dadosPartida.Length < 5)
+                {
+                    MessageBox.Show("Dados da partida inválidos.");
+                    return;
+                }
+
+                // Monta info da rodada atual (igual ao btnIniciarPartida)
+                string idJogadorDado = dadosPartida[3].Trim();
+                string nomeJogadorDado = idJogadorDado;
+
+                string jogadores = Jogo.ListarJogadores(idPartida);
+                if (!string.IsNullOrWhiteSpace(jogadores) && !jogadores.StartsWith("ERRO"))
+                {
+                    jogadores = jogadores.Replace("\r", "");
+                    string[] listaJogadores = jogadores.Split('\n');
+
+                    foreach (string j in listaJogadores)
+                    {
+                        if (!string.IsNullOrWhiteSpace(j))
+                        {
+                            string[] partes = j.Split(',');
+                            if (partes.Length >= 2)
+                            {
+                                string id = partes[0].Trim();
+                                string nome = partes[1].Trim();
+                                if (id == idJogadorDado)
+                                {
+                                    nomeJogadorDado = nome;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                string faceDado = dadosPartida[4].Trim();
+                string nomeFace = "";
+
+                if (faceDado == "AL")
+                    nomeFace = "Alimentação";
+                else if (faceDado == "FL")
+                    nomeFace = "Floresta";
+                else if (faceDado == "PR")
+                    nomeFace = "Pradaria";
+                else if (faceDado == "TI")
+                    nomeFace = "Tiranossauro Rex";
+                else if (faceDado == "VZ")
+                    nomeFace = "Cercado Vazio";
+                else if (faceDado == "WC")
+                    nomeFace = "Banheiros";
+                else
+                    nomeFace = faceDado;
+
+                string turno = dadosPartida[1].Trim();
+                string infoRodada = $"Turno {turno}: O jogador {nomeJogadorDado} rolou o dado e caiu {nomeFace}";
+
+                // Abre a TelaJogo diretamente
+                TelaJogo tela = new TelaJogo();
+                tela.IdPartida = idPartida;
+                tela.IdJogadorPrincipal = idJogador;
+                tela.SenhaJogadorPrincipal = senhaJogador;
+                tela.InfoRodada = infoRodada;
+                tela.NomeJogadorPrincipal = txtNomeJogadorPrincipal.Text.Trim();
+
+                tela.Show();
+                this.Hide();
+            }
+
+        }
     }
 }
