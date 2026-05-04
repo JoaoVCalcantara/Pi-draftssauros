@@ -16,9 +16,9 @@ namespace Pi_3
 
         private static readonly Dictionary<string, Point> PosicoesCercados = new Dictionary<string, Point>
         {
-            { "CD", new Point(500, 280) },
+            { "CD", new Point(485, 265) },
             { "FI", new Point(190, 90) },
-            { "MT", new Point(250, 245) },
+            { "MT", new Point(240, 240) },
             { "PA", new Point(275, 400) },
             { "RS", new Point(550, 70) },
             { "IS", new Point(615, 380) },
@@ -28,14 +28,14 @@ namespace Pi_3
         private static readonly Dictionary<string, int> MaxDinosCercado = new Dictionary<string, int>
         {
             { "CD", 6 }, { "FI", 6 }, { "MT", 3 },
-            { "PA", 12 }, { "RS", 1 }, { "IS", 1 }, { "RI", 6 },
+            { "PA", 6 }, { "RS", 1 }, { "IS", 1 }, { "RI", 6 },
         };
 
         private const int MAO_SPACING = 58;
         private const int MAO_SIZE = 50;
         private const int MAO_GAP = 12;
-        private const int DINO_SIZE = 38;
-        private const int DINO_SIZE_GG = 46;
+        private const int DINO_SIZE = 45;
+        private const int DINO_SIZE_GG = 60;
         private readonly List<PictureBox> _dinosPictureBoxes = new List<PictureBox>();
         private readonly List<PictureBox> _maoPictureBoxes = new List<PictureBox>();
         private readonly List<string> _maoSiglas = new List<string>();
