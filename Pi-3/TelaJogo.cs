@@ -43,7 +43,7 @@ namespace Pi_3
         private static readonly Dictionary<string, int> CapacidadeDeCadaCercado = new Dictionary<string, int>
         {
             { "CD", 6 }, { "FI", 6 }, { "MT", 3 },
-            { "PA", 6 }, { "RS", 1 }, { "IS", 1 }, { "RI", 6 },
+            { "PA", 12 }, { "RS", 1 }, { "IS", 1 }, { "RI", 12 },
         };
 
         public TelaJogo()
@@ -211,7 +211,7 @@ namespace Pi_3
             }
 
             var (melhorDino, melhorCercado) = EscolherMelhorJogada(cercadosPermitidos, meuTabuleiro, tabuleiroProximoJogador);
-            RealizarJogada(melhorDino, melhorCercado);
+            RealizarJogada(melhorDino, melhorCercado, cercadosPermitidos);
         }
 
         private (string dino, string cercado) EscolherMelhorJogada(
@@ -227,20 +227,34 @@ namespace Pi_3
 
             foreach (string dino in _siglasDinosNaMao.Distinct())
             {
-                double ganhoProximoSePassarMaoSemEsseDino = CalcularGanhoProximoComMaoSemEsseDino(dino, tabuleiroProximoJogador);
+                double ganhoProximo = CalcularGanhoProximoComMaoSemEsseDino(dino, tabuleiroProximoJogador);
 
                 foreach (string cercado in todasAsOpcoes)
                 {
                     int meuGanho = EstimarPontuacaoDaJogada(dino, cercado, meuTabuleiro);
                     if (meuGanho < 0) continue;
 
-                    double pontuacaoTotal = meuGanho - PESO_NEGACAO_OPONENTE * ganhoProximoSePassarMaoSemEsseDino;
+                    double pontuacaoTotal = meuGanho - PESO_NEGACAO_OPONENTE * ganhoProximo;
 
                     if (pontuacaoTotal > melhorPontuacaoTotal)
                     {
                         melhorPontuacaoTotal = pontuacaoTotal;
                         melhorDino = CapitalizarSigla(dino);
                         melhorCercado = cercado;
+                    }
+                }
+            }
+
+            if (melhorCercado == "RI" && cercadosPermitidos.Count > 0)
+            {
+                string especieIS = ObterEspecieNaIlhaSolitaria(meuTabuleiro);
+                foreach (string cercado in new[] { "CD", "MT", "FI", "PA", "RS", "IS" }.Where(cercadosPermitidos.Contains))
+                {
+                    foreach (string dino in _siglasDinosNaMao.Distinct())
+                    {
+                        string dinoApi = CapitalizarSigla(dino);
+                        if (especieIS != null && dinoApi == especieIS && cercado != "IS") continue;
+                        return (dinoApi, cercado);
                     }
                 }
             }
@@ -261,11 +275,11 @@ namespace Pi_3
                 return -1;
 
             var especiesNaCD = ObterEspeciesNaCD(tabuleiro);
+            int naoTiNaCD = especiesNaCD.Count(e => e != "Ti");
             bool cdCompleta = especiesNaCD.Count >= 5;
-            string mainEspecie = ObterMainEspecie(tabuleiro);
-            bool paTemCasal = PATemCasal(tabuleiro);
             int mtCount = tabuleiro.ContainsKey("MT") ? tabuleiro["MT"].Count : 0;
-            bool cdTemQuatroNaoTRex = especiesNaCD.Count == 4 && !especiesNaCD.Contains("Ti");
+            string especieParaRS = ObterEspecieParaRS(tabuleiro);
+            bool paTemCasal = PATemCasal(tabuleiro);
 
             switch (cercado)
             {
@@ -273,43 +287,55 @@ namespace Pi_3
                     {
                         if (cdCompleta || especiesNaCD.Contains(dinoApi)) return -1;
                         if (dinoApi == "Ti")
-                            return cdTemQuatroNaoTRex ? 115 : 20;
-                        return cdTemQuatroNaoTRex ? 90 : 110;
-                    }
-
-                case "PA":
-                    {
-                        if (dinosNoCercado.Count >= 2) return -1;
-                        if (dinosNoCercado.Count == 1 && dinosNoCercado[0] == dinoApi) return 120;
-                        if (dinosNoCercado.Count == 1) return -1;
-                        if (paTemCasal) return -1;
-                        return 75;
-                    }
-
-                case "RS":
-                    {
-                        if (dinosNoCercado.Count > 0) return -1;
-                        if (mainEspecie != null && dinoApi == mainEspecie && paTemCasal) return 96;
-                        if (dinoApi == "Ti" && paTemCasal) return 70;
-                        return 15;
-                    }
-
-                case "MT":
-                    {
-                        if (dinosNoCercado.Count >= 3) return -1;
-                        if (mainEspecie != null && dinoApi == mainEspecie)
-                            return 85 + mtCount * 5;
-                        if (dinoApi == "Ti") return 55;
-                        return 35;
+                        {
+                            if (naoTiNaCD < 2) return 15;
+                            if (naoTiNaCD == 4) return 115;
+                            return 100;
+                        }
+                        return 110;
                     }
 
                 case "IS":
                     {
                         if (dinosNoCercado.Count > 0) return -1;
                         if (EspecieExisteForaDaIlhaSolitaria(dinoApi, tabuleiro)) return -1;
-                        if (!cdCompleta) return 5;
-                        string especieAlvoIS = ObterEspecieAlvoParaIS(tabuleiro);
-                        return (especieAlvoIS != null && dinoApi == especieAlvoIS) ? 100 : 40;
+                        if (especiesNaCD.Count < 3) return 5;
+                        return 95;
+                    }
+
+                case "RS":
+                    {
+                        if (dinosNoCercado.Count > 0) return -1;
+                        if (especieParaRS != null && dinoApi == especieParaRS) return 93;
+                        return 15;
+                    }
+
+                case "MT":
+                    {
+                        if (dinosNoCercado.Count >= 3) return -1;
+                        int baseScore = 70 + mtCount * 10;
+                        return (dinoApi == "Ti" && mtCount < 2) ? baseScore + 5 : baseScore;
+                    }
+
+                case "PA":
+                    {
+                        if (dinosNoCercado.Count >= 2) return -1;
+                        if (dinosNoCercado.Count == 1 && dinosNoCercado[0] == dinoApi) return 80;
+                        if (dinosNoCercado.Count == 1) return -1;
+                        if (paTemCasal) return -1;
+                        return 35;
+                    }
+
+                case "FI":
+                    {
+                        if (dinosNoCercado.Count >= 6) return -1;
+                        if (dinosNoCercado.Count > 0)
+                            return dinosNoCercado[0] == dinoApi ? 12 + dinosNoCercado.Count * 2 : -1;
+                        string especieRS = ObterEspecieNaRS(tabuleiro);
+                        if (especieRS != null && dinoApi == especieRS) return 17;
+                        string maisFrequente = ObterEspecieMaisFrequente(tabuleiro);
+                        if (maisFrequente != null && dinoApi == maisFrequente) return 15;
+                        return 12;
                     }
 
                 case "RI":
@@ -326,32 +352,46 @@ namespace Pi_3
             return new HashSet<string>(tabuleiro["CD"]);
         }
 
-        private string ObterMainEspecie(Dictionary<string, List<string>> tabuleiro)
+        private string ObterEspecieParaRS(Dictionary<string, List<string>> tabuleiro)
         {
-            if (tabuleiro.ContainsKey("PA") && tabuleiro["PA"].Count > 0)
-                return tabuleiro["PA"][0];
-            if (tabuleiro.ContainsKey("RS") && tabuleiro["RS"].Count > 0)
-                return tabuleiro["RS"][0];
-            if (tabuleiro.ContainsKey("MT") && tabuleiro["MT"].Count >= 2)
-                return tabuleiro["MT"].GroupBy(d => d).OrderByDescending(g => g.Count()).First().Key;
-            return null;
+            var contagem = new Dictionary<string, int>();
+            foreach (var par in tabuleiro)
+                foreach (string d in par.Value)
+                {
+                    if (!contagem.ContainsKey(d)) contagem[d] = 0;
+                    contagem[d]++;
+                }
+            return contagem
+                .Where(kvp => kvp.Value >= 2)
+                .OrderByDescending(kvp => kvp.Value)
+                .ThenByDescending(kvp => kvp.Key == "Ti")
+                .Select(kvp => kvp.Key)
+                .FirstOrDefault();
         }
 
-        private string ObterEspecieAlvoParaIS(Dictionary<string, List<string>> tabuleiro)
+        private string ObterEspecieNaRS(Dictionary<string, List<string>> tabuleiro)
         {
-            if (tabuleiro.ContainsKey("IS") && tabuleiro["IS"].Count > 0)
-                return tabuleiro["IS"][0];
-            var especiesNaCD = ObterEspeciesNaCD(tabuleiro);
-            if (especiesNaCD.Count < 5) return null;
-            var faltando = TodasAsEspecies.Where(e => !especiesNaCD.Contains(e)).ToList();
-            return faltando.Count == 1 ? faltando[0] : null;
+            if (!tabuleiro.ContainsKey("RS") || tabuleiro["RS"].Count == 0) return null;
+            return tabuleiro["RS"][0];
         }
 
-        private bool PATemCasal(Dictionary<string, List<string>> tabuleiro)
+        private string ObterEspecieMaisFrequente(Dictionary<string, List<string>> tabuleiro)
         {
-            if (!tabuleiro.ContainsKey("PA") || tabuleiro["PA"].Count < 2) return false;
-            string primeira = tabuleiro["PA"][0];
-            return tabuleiro["PA"].Count(d => d == primeira) >= 2;
+            string especieIS = ObterEspecieNaIlhaSolitaria(tabuleiro);
+            var contagem = new Dictionary<string, int>();
+            foreach (var par in tabuleiro)
+            {
+                if (par.Key == "IS") continue;
+                foreach (string d in par.Value)
+                {
+                    if (d == especieIS) continue;
+                    if (!contagem.ContainsKey(d)) contagem[d] = 0;
+                    contagem[d]++;
+                }
+            }
+            return contagem.Count > 0
+                ? contagem.OrderByDescending(kvp => kvp.Value).First().Key
+                : null;
         }
 
         private string ObterEspecieNaIlhaSolitaria(Dictionary<string, List<string>> tabuleiro)
@@ -365,6 +405,13 @@ namespace Pi_3
             return tabuleiro.Where(par => par.Key != "IS").Any(par => par.Value.Contains(dino));
         }
 
+        private bool PATemCasal(Dictionary<string, List<string>> tabuleiro)
+        {
+            if (!tabuleiro.ContainsKey("PA") || tabuleiro["PA"].Count < 2) return false;
+            string primeira = tabuleiro["PA"][0];
+            return tabuleiro["PA"].Count(d => d == primeira) >= 2;
+        }
+
         private double CalcularGanhoProximoComMaoSemEsseDino(string dinoQueSereiJogado, Dictionary<string, List<string>> tabuleiroProximo)
         {
             if (tabuleiroProximo == null || tabuleiroProximo.Count == 0) return 0;
@@ -374,11 +421,11 @@ namespace Pi_3
 
         private int EstimarMelhorValorQueOponenteExtrai(string dino, Dictionary<string, List<string>> tabuleiroOponente)
         {
-            var todosCercados = new[] { "CD", "MT", "PA", "RS", "IS", "RI" };
+            var todosCercados = new[] { "CD", "FI", "MT", "PA", "RS", "IS", "RI" };
             return todosCercados.Max(cercado => Math.Max(0, EstimarPontuacaoDaJogada(dino, cercado, tabuleiroOponente)));
         }
 
-        private void RealizarJogada(string dino, string cercado)
+        private void RealizarJogada(string dino, string cercado, List<string> cercadosPermitidos)
         {
             ExibirStatus($"Jogando {dino} em {cercado}", Color.DarkBlue);
             this.Refresh();
@@ -392,14 +439,26 @@ namespace Pi_3
                 return;
             }
 
-            ExibirStatus($"Falhou ({retorno}), tentando Rio...", Color.OrangeRed);
+            foreach (string alternativa in cercadosPermitidos.Where(c => c != cercado))
+            {
+                string retAlt = Jogo.Jogar(IdJogadorPrincipal, SenhaJogadorPrincipal, dino, alternativa);
+                if (!RespostaInvalida(retAlt))
+                {
+                    _jaJogouNesteTurno = true;
+                    ExibirStatus($"{dino} → {alternativa} (alternativa) | OK", Color.Orange);
+                    AtualizarTela();
+                    return;
+                }
+            }
+
+            ExibirStatus("Todos falharam, tentando Rio...", Color.OrangeRed);
             this.Refresh();
 
             string retornoRio = Jogo.Jogar(IdJogadorPrincipal, SenhaJogadorPrincipal, dino, "RI");
             if (!RespostaInvalida(retornoRio))
             {
                 _jaJogouNesteTurno = true;
-                ExibirStatus($"{dino} → RI (erro no cercado original) | OK", Color.SteelBlue);
+                ExibirStatus($"{dino} → RI (último recurso) | OK", Color.SteelBlue);
                 AtualizarTela();
             }
             else
@@ -412,21 +471,21 @@ namespace Pi_3
         {
             switch (restricaoDado)
             {
-                case "livre": return new List<string> { "CD", "MT", "PA", "RS", "IS" };
-                case "FL": return new List<string> { "MT" };
+                case "livre": return new List<string> { "CD", "FI", "MT", "PA", "RS", "IS" };
+                case "FL": return new List<string> { "FI", "MT" };
                 case "PR": return new List<string> { "PA", "MT" };
                 case "WC": return new List<string> { "IS", "CD" };
-                case "AL": return new List<string> { "CD" };
+                case "AL": return new List<string> { "FI", "CD" };
                 case "VZ": return ObterCercadosVazios(meuTabuleiro);
                 case "TI": return ObterCercadosSemTRex(meuTabuleiro);
-                default: return new List<string> { "CD", "MT", "PA", "RS", "IS" };
+                default: return new List<string> { "CD", "FI", "MT", "PA", "RS", "IS" };
             }
         }
 
         private List<string> ObterCercadosVazios(Dictionary<string, List<string>> meuTabuleiro)
         {
             var cercadosOcupados = meuTabuleiro.Keys.Where(c => meuTabuleiro[c].Count > 0).ToHashSet();
-            return new[] { "CD", "MT", "PA", "RS", "IS" }
+            return new[] { "CD", "FI", "MT", "PA", "RS", "IS" }
                 .Where(c => !cercadosOcupados.Contains(c))
                 .ToList();
         }
@@ -437,7 +496,7 @@ namespace Pi_3
                 .Where(par => par.Value.Contains("Ti"))
                 .Select(par => par.Key)
                 .ToHashSet();
-            return new[] { "CD", "MT", "PA", "RS", "IS" }
+            return new[] { "CD", "FI", "MT", "PA", "RS", "IS" }
                 .Where(c => !cercadosComTRex.Contains(c))
                 .ToList();
         }
