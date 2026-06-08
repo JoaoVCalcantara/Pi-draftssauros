@@ -27,7 +27,8 @@ namespace Pi_3
 
         private const double PESO_NEGACAO_OPONENTE = 0.35;
         private const double PESO_FUTURO_PROPRIO = 0.25;
-        private const double PESO_IS_PENALTY_CEDO = 4.0;
+        private const double PESO_IS_PENALTY_CEDO = 5.0;
+        private const double PESO_RS_PENALTY_CEDO = 3.0;
         private const double PESO_FECHAMENTO_TURNO_FINAL = 1.5;
         private const double PESO_ESCASSEZ_UNICO = 1.35;
         private const double PENALTY_ABRIR_TARDE = 3.0;
@@ -312,6 +313,7 @@ namespace Pi_3
                     double potencialFuturo = EstimarPotencialFuturo(dino, cercado, meuTabuleiro, contexto);
                     double bonusContinuidade = BonusContinuidade(dino, cercado, meuTabuleiro);
                     double penaltyIS = PenaltyISCedo(cercado, contexto);
+                    double penaltyRS = PenaltyRSCedo(cercado, meuTabuleiro, contexto);
                     double penaltyAbrirTarde = PenaltyAbrirComboTarde(dino, cercado, meuTabuleiro, contexto);
                     double bonusFecharR2 = BonusFecharComboR2(dino, cercado, meuTabuleiro, contexto);
 
@@ -322,6 +324,7 @@ namespace Pi_3
                                           + bonusContinuidade
                                           + bonusFecharR2
                                           - penaltyIS
+                                          - penaltyRS
                                           - penaltyAbrirTarde
                                           - PESO_NEGACAO_OPONENTE * ganhoCedidoOponentes
                                           - PESO_ANTI_DOACAO * penaltyDoacao;
@@ -366,8 +369,18 @@ namespace Pi_3
         {
             if (cercado != "IS") return 0;
             double turnosRestantes = contexto.TurnosRestantes;
-            if (turnosRestantes <= 3) return 0;
+            if (turnosRestantes <= 2) return 0;
             return PESO_IS_PENALTY_CEDO * (turnosRestantes / 12.0);
+        }
+
+        // Penalty pra comitar RS cedo: lead pode evaporar com oponentes acumulando a espécie.
+        private double PenaltyRSCedo(string cercado, Dictionary<string, List<string>> meuTabuleiro, ContextoJogo contexto)
+        {
+            if (cercado != "RS") return 0;
+            if (meuTabuleiro.ContainsKey("RS") && meuTabuleiro["RS"].Count > 0) return 0;
+            double turnosRestantes = contexto.TurnosRestantes;
+            if (turnosRestantes <= 3) return 0;
+            return PESO_RS_PENALTY_CEDO * (turnosRestantes / 12.0);
         }
 
         // Dino único na mão = boost (não vai voltar). Várias cópias = sem pressa. Escala com nº jogadores.
@@ -408,6 +421,8 @@ namespace Pi_3
                 return BONUS_FECHAR_COMBO_R2 * (atual.Count / 6.0);
             if (cercado == "MT" && atual.Count == 2)
                 return BONUS_FECHAR_COMBO_R2;
+            if (cercado == "MT" && atual.Count == 1)
+                return BONUS_FECHAR_COMBO_R2 * 0.6;
             if (cercado == "PA" && atual.Count > 0 && atual.Contains(dinoApi))
                 return BONUS_FECHAR_COMBO_R2 * 0.6;
             return 0;
@@ -437,6 +452,8 @@ namespace Pi_3
         private double BonusContinuidade(string dino, string cercado, Dictionary<string, List<string>> tabuleiro)
         {
             string dinoApi = CapitalizarSigla(dino);
+            int qtdNaMao = _siglasDinosNaMao.Count(d => CapitalizarSigla(d) == dinoApi);
+
             if (cercado == "FI" && tabuleiro.ContainsKey("FI") && tabuleiro["FI"].Count > 0 && tabuleiro["FI"][0] == dinoApi)
                 return 2.0;
             if (cercado == "PA" && tabuleiro.ContainsKey("PA"))
@@ -445,6 +462,7 @@ namespace Pi_3
                 int countDessa = tabuleiro["PA"].Count(d => d == dinoApi);
                 if (countDessa % 2 == 1) return 3.0;
                 if (countDessa >= 2) return 1.0;
+                if (countDessa == 0 && qtdNaMao >= 2) return 2.5;
                 if (casaisExistentes > 0) return 0.5;
             }
             return 0;
@@ -485,7 +503,7 @@ namespace Pi_3
             return total;
         }
 
-        // Versão completa: RS/IS olham os oponentes pra saber se vale 7 pts ou 0.
+        // Versão completa: RS/IS olham oponentes e aplicam desconto de incerteza por turno.
         private int PontuarCercadoComContexto(string cercado, Dictionary<string, List<string>> tabuleiro, ContextoJogo contexto)
         {
             if (cercado == "RS")
@@ -497,15 +515,27 @@ namespace Pi_3
                 if (contexto?.TabuleirosOponentes != null)
                     foreach (var t in contexto.TabuleirosOponentes.Values)
                         maxOpoQtd = Math.Max(maxOpoQtd, ContarEspecieNoTabuleiro(t, especie));
-                return minhaQtd >= maxOpoQtd ? PONTOS_RS_VITORIA : 0;
+                if (minhaQtd < maxOpoQtd) return 0;
+                int lead = minhaQtd - maxOpoQtd;
+                double leadFactor = Math.Min(1.0, 0.3 + 0.1 * minhaQtd + 0.15 * lead);
+                return (int)Math.Round(PONTOS_RS_VITORIA * FatorConfiancaEndgame(contexto) * leadFactor);
             }
             if (cercado == "IS")
             {
                 if (!tabuleiro.ContainsKey("IS") || tabuleiro["IS"].Count == 0) return 0;
                 string especie = tabuleiro["IS"][0];
-                return EspecieExisteForaDaIlhaSolitaria(especie, tabuleiro) ? 0 : PONTOS_IS_VITORIA;
+                if (EspecieExisteForaDaIlhaSolitaria(especie, tabuleiro)) return 0;
+                return (int)Math.Round(PONTOS_IS_VITORIA * FatorConfiancaEndgame(contexto));
             }
             return PontuarCercadoLocal(cercado, tabuleiro);
+        }
+
+        // Cresce de 0.3 (turno 1) até 1.0 (turno 12). RS/IS só valem o cheio perto do fim.
+        private double FatorConfiancaEndgame(ContextoJogo contexto)
+        {
+            if (contexto == null) return 1.0;
+            double turnosJogados = TOTAL_TURNOS - contexto.TurnosRestantes;
+            return Math.Min(1.0, 0.3 + 0.7 * (turnosJogados / (double)TOTAL_TURNOS));
         }
 
         // Heurística do quanto a jogada "prepara" pontuação futura no mesmo cercado.
@@ -528,7 +558,9 @@ namespace Pi_3
                         return (PONTOS_CD[Math.Min(atual.Count + 2, 6)] - PONTOS_CD[atual.Count + 1]) * escalaTurno;
                     return 0;
                 case "MT":
-                    if (atual.Count < 3) return (atual.Count == 2 ? 4 : 1) * escalaTurno;
+                    if (atual.Count == 0) return 2 * escalaTurno;
+                    if (atual.Count == 1) return 4.5 * escalaTurno;
+                    if (atual.Count == 2) return 7 * escalaTurno;
                     return 0;
                 case "PA":
                     if (atual.Count > 0 && atual[atual.Count - 1] == dinoApi) return 0;

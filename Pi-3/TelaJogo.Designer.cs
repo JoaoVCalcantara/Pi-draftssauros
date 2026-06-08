@@ -104,8 +104,10 @@
             // lstPontuacao
             // 
             this.lstPontuacao.FormattingEnabled = true;
+            this.lstPontuacao.HorizontalScrollbar = true;
             this.lstPontuacao.Location = new System.Drawing.Point(6, 48);
             this.lstPontuacao.Name = "lstPontuacao";
+            this.lstPontuacao.ScrollAlwaysVisible = true;
             this.lstPontuacao.Size = new System.Drawing.Size(120, 199);
             this.lstPontuacao.TabIndex = 35;
             // 
