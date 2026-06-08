@@ -32,10 +32,8 @@
             this.btnValidarTurno = new System.Windows.Forms.Button();
             this.lstVerficarTurno = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnVerificarTabuleiro = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtIDJogadorTabuleiro = new System.Windows.Forms.TextBox();
-            this.lstTabuleiro = new System.Windows.Forms.ListBox();
+            this.lstPontuacao = new System.Windows.Forms.ListBox();
+            this.btnExibirPontuacao = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.lblCercado = new System.Windows.Forms.Label();
             this.lblDinossauro = new System.Windows.Forms.Label();
@@ -95,50 +93,32 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.btnVerificarTabuleiro);
-            this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Controls.Add(this.txtIDJogadorTabuleiro);
-            this.groupBox4.Controls.Add(this.lstTabuleiro);
+            this.groupBox4.Controls.Add(this.lstPontuacao);
+            this.groupBox4.Controls.Add(this.btnExibirPontuacao);
             this.groupBox4.Location = new System.Drawing.Point(12, 172);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(132, 263);
             this.groupBox4.TabIndex = 28;
             this.groupBox4.TabStop = false;
             // 
-            // btnVerificarTabuleiro
+            // lstPontuacao
             // 
-            this.btnVerificarTabuleiro.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVerificarTabuleiro.Location = new System.Drawing.Point(3, 38);
-            this.btnVerificarTabuleiro.Name = "btnVerificarTabuleiro";
-            this.btnVerificarTabuleiro.Size = new System.Drawing.Size(122, 23);
-            this.btnVerificarTabuleiro.TabIndex = 34;
-            this.btnVerificarTabuleiro.Text = "Exibir Tabuleiro";
-            this.btnVerificarTabuleiro.UseVisualStyleBackColor = true;
-            this.btnVerificarTabuleiro.Click += new System.EventHandler(this.btnVerificarTabuleiro_Click);
+            this.lstPontuacao.FormattingEnabled = true;
+            this.lstPontuacao.Location = new System.Drawing.Point(6, 48);
+            this.lstPontuacao.Name = "lstPontuacao";
+            this.lstPontuacao.Size = new System.Drawing.Size(120, 199);
+            this.lstPontuacao.TabIndex = 35;
             // 
-            // label1
+            // btnExibirPontuacao
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(21, 13);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "ID:";
-            // 
-            // txtIDJogadorTabuleiro
-            // 
-            this.txtIDJogadorTabuleiro.Location = new System.Drawing.Point(35, 11);
-            this.txtIDJogadorTabuleiro.Name = "txtIDJogadorTabuleiro";
-            this.txtIDJogadorTabuleiro.Size = new System.Drawing.Size(90, 20);
-            this.txtIDJogadorTabuleiro.TabIndex = 33;
-            // 
-            // lstTabuleiro
-            // 
-            this.lstTabuleiro.FormattingEnabled = true;
-            this.lstTabuleiro.Location = new System.Drawing.Point(6, 67);
-            this.lstTabuleiro.Name = "lstTabuleiro";
-            this.lstTabuleiro.Size = new System.Drawing.Size(120, 186);
-            this.lstTabuleiro.TabIndex = 15;
+            this.btnExibirPontuacao.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExibirPontuacao.Location = new System.Drawing.Point(4, 19);
+            this.btnExibirPontuacao.Name = "btnExibirPontuacao";
+            this.btnExibirPontuacao.Size = new System.Drawing.Size(122, 23);
+            this.btnExibirPontuacao.TabIndex = 35;
+            this.btnExibirPontuacao.Text = "Exibir Tabuleiro";
+            this.btnExibirPontuacao.UseVisualStyleBackColor = true;
+            this.btnExibirPontuacao.Click += new System.EventHandler(this.btnExibirPontuacao_Click);
             // 
             // groupBox3
             // 
@@ -303,9 +283,10 @@
             // lblTurno
             // 
             this.lblTurno.AutoSize = true;
-            this.lblTurno.Location = new System.Drawing.Point(77, 148);
+            this.lblTurno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTurno.Location = new System.Drawing.Point(77, 146);
             this.lblTurno.Name = "lblTurno";
-            this.lblTurno.Size = new System.Drawing.Size(31, 13);
+            this.lblTurno.Size = new System.Drawing.Size(41, 16);
             this.lblTurno.TabIndex = 44;
             this.lblTurno.Text = "turno";
             // 
@@ -366,7 +347,6 @@
             this.Text = " ";
             this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -381,10 +361,6 @@
         private System.Windows.Forms.Button btnValidarTurno;
         private System.Windows.Forms.ListBox lstVerficarTurno;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button btnVerificarTabuleiro;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtIDJogadorTabuleiro;
-        private System.Windows.Forms.ListBox lstTabuleiro;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lblCercado;
         private System.Windows.Forms.Label lblDinossauro;
@@ -406,5 +382,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAtualizarHistorico;
         private System.Windows.Forms.Button btn_auto;
+        private System.Windows.Forms.ListBox lstPontuacao;
+        private System.Windows.Forms.Button btnExibirPontuacao;
     }
 }

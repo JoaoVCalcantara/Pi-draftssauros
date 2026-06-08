@@ -38,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnVerTabuleiro = new System.Windows.Forms.Button();
             this.btnEntrarJogadorPrincipal = new System.Windows.Forms.Button();
             this.txtNomeJogadorPrincipal = new System.Windows.Forms.TextBox();
             this.txtSenhaPartida = new System.Windows.Forms.TextBox();
@@ -48,7 +49,6 @@
             this.lblStatusPartida = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.btnVerTabuleiro = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
@@ -158,6 +158,17 @@
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             // 
+            // btnVerTabuleiro
+            // 
+            this.btnVerTabuleiro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVerTabuleiro.Location = new System.Drawing.Point(4, 48);
+            this.btnVerTabuleiro.Name = "btnVerTabuleiro";
+            this.btnVerTabuleiro.Size = new System.Drawing.Size(130, 34);
+            this.btnVerTabuleiro.TabIndex = 19;
+            this.btnVerTabuleiro.Text = "Ver Tabuleiro (Partida iniciada)";
+            this.btnVerTabuleiro.UseVisualStyleBackColor = true;
+            this.btnVerTabuleiro.Click += new System.EventHandler(this.btnVerTabuleiro_Click);
+            // 
             // btnEntrarJogadorPrincipal
             // 
             this.btnEntrarJogadorPrincipal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -249,17 +260,6 @@
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 35;
             this.label9.Text = "label9";
-            // 
-            // btnVerTabuleiro
-            // 
-            this.btnVerTabuleiro.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVerTabuleiro.Location = new System.Drawing.Point(4, 48);
-            this.btnVerTabuleiro.Name = "btnVerTabuleiro";
-            this.btnVerTabuleiro.Size = new System.Drawing.Size(130, 30);
-            this.btnVerTabuleiro.TabIndex = 19;
-            this.btnVerTabuleiro.Text = "Ver Tabuleiro";
-            this.btnVerTabuleiro.UseVisualStyleBackColor = true;
-            this.btnVerTabuleiro.Click += new System.EventHandler(this.btnVerTabuleiro_Click);
             // 
             // Lobby
             // 
