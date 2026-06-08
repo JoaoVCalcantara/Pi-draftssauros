@@ -254,7 +254,8 @@ namespace Pi_3
                     {
                         string dinoApi = CapitalizarSigla(dino);
                         if (especieIS != null && dinoApi == especieIS && cercado != "IS") continue;
-                        return (dinoApi, cercado);
+                        if (EstimarPontuacaoDaJogada(dino, cercado, meuTabuleiro) >= 0)
+                            return (dinoApi, cercado);
                     }
                 }
             }
@@ -299,8 +300,9 @@ namespace Pi_3
                     {
                         if (dinosNoCercado.Count > 0) return -1;
                         if (EspecieExisteForaDaIlhaSolitaria(dinoApi, tabuleiro)) return -1;
-                        if (especiesNaCD.Count < 3) return 5;
-                        return 95;
+                        int totalEspeciesNoTabuleiro = ObterEspeciesNoTabuleiroTotal(tabuleiro).Count;
+                        if (totalEspeciesNoTabuleiro < 4) return 5;
+                        return 115;
                     }
 
                 case "RS":
@@ -320,7 +322,7 @@ namespace Pi_3
                 case "PA":
                     {
                         if (dinosNoCercado.Count >= 2) return -1;
-                        if (dinosNoCercado.Count == 1 && dinosNoCercado[0] == dinoApi) return 80;
+                        if (dinosNoCercado.Count == 1 && dinosNoCercado[0] == dinoApi) return 120;
                         if (dinosNoCercado.Count == 1) return -1;
                         if (paTemCasal) return -1;
                         return 35;
@@ -350,6 +352,15 @@ namespace Pi_3
         {
             if (!tabuleiro.ContainsKey("CD")) return new HashSet<string>();
             return new HashSet<string>(tabuleiro["CD"]);
+        }
+
+        private HashSet<string> ObterEspeciesNoTabuleiroTotal(Dictionary<string, List<string>> tabuleiro)
+        {
+            var especies = new HashSet<string>();
+            foreach (var par in tabuleiro)
+                foreach (string d in par.Value)
+                    especies.Add(d);
+            return especies;
         }
 
         private string ObterEspecieParaRS(Dictionary<string, List<string>> tabuleiro)
