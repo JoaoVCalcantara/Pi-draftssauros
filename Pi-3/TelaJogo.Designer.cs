@@ -116,7 +116,7 @@
             this.btnExibirPontuacao.Name = "btnExibirPontuacao";
             this.btnExibirPontuacao.Size = new System.Drawing.Size(122, 23);
             this.btnExibirPontuacao.TabIndex = 35;
-            this.btnExibirPontuacao.Text = "Exibir Tabuleiro";
+            this.btnExibirPontuacao.Text = "Exibir Pontuação";
             this.btnExibirPontuacao.UseVisualStyleBackColor = true;
             this.btnExibirPontuacao.Click += new System.EventHandler(this.btnExibirPontuacao_Click);
             // 

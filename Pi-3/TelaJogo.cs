@@ -912,9 +912,6 @@ namespace Pi_3
             lstPontuacao.Items.Clear();
 
             bool partidaEncerrada = PartidaEstaEncerrada();
-            lstPontuacao.Items.Add(partidaEncerrada
-                ? "=== PONTUAÇÃO FINAL (oficial) ==="
-                : "=== PONTUAÇÃO PARCIAL (estimada) ===");
             lstPontuacao.Items.Add("");
 
             var jogadores = ObterListaJogadores();

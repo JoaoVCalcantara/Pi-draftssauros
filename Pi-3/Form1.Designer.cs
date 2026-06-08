@@ -36,7 +36,6 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_criar_partida = new System.Windows.Forms.Button();
-            this.btnJogadores = new System.Windows.Forms.Button();
             this.btnSelecionarPartida = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -55,18 +54,19 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtIDPartida = new System.Windows.Forms.TextBox();
-            this.txtNomeJogador = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.btnJogadores = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtSenha2 = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtNomeJogador = new System.Windows.Forms.TextBox();
+            this.txtIDPartida = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.txtSenha2 = new System.Windows.Forms.TextBox();
             this.lblIDJogador = new System.Windows.Forms.Label();
             this.lblSenhaJogador = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -142,17 +142,6 @@
             this.btn_criar_partida.Text = "Criar partida";
             this.btn_criar_partida.UseVisualStyleBackColor = true;
             this.btn_criar_partida.Click += new System.EventHandler(this.btn_criar_partida_Click);
-            // 
-            // btnJogadores
-            // 
-            this.btnJogadores.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnJogadores.Location = new System.Drawing.Point(118, 39);
-            this.btnJogadores.Name = "btnJogadores";
-            this.btnJogadores.Size = new System.Drawing.Size(94, 66);
-            this.btnJogadores.TabIndex = 10;
-            this.btnJogadores.Text = "Adicionar Jogador";
-            this.btnJogadores.UseVisualStyleBackColor = true;
-            this.btnJogadores.Click += new System.EventHandler(this.btnJogadores_Click);
             // 
             // btnSelecionarPartida
             // 
@@ -328,28 +317,36 @@
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             // 
-            // txtIDPartida
+            // label21
             // 
-            this.txtIDPartida.Location = new System.Drawing.Point(12, 63);
-            this.txtIDPartida.Name = "txtIDPartida";
-            this.txtIDPartida.Size = new System.Drawing.Size(100, 20);
-            this.txtIDPartida.TabIndex = 32;
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(394, 27);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(88, 15);
+            this.label21.TabIndex = 42;
+            this.label21.Text = "Criar Partida";
             // 
-            // txtNomeJogador
+            // label19
             // 
-            this.txtNomeJogador.Location = new System.Drawing.Point(12, 24);
-            this.txtNomeJogador.Name = "txtNomeJogador";
-            this.txtNomeJogador.Size = new System.Drawing.Size(100, 20);
-            this.txtNomeJogador.TabIndex = 31;
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(394, 165);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(138, 15);
+            this.label19.TabIndex = 41;
+            this.label19.Text = "Adicionar Jogadores";
             // 
-            // label16
+            // btnJogadores
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(9, 47);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(68, 13);
-            this.label16.TabIndex = 30;
-            this.label16.Text = "ID da partida";
+            this.btnJogadores.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnJogadores.Location = new System.Drawing.Point(118, 39);
+            this.btnJogadores.Name = "btnJogadores";
+            this.btnJogadores.Size = new System.Drawing.Size(94, 66);
+            this.btnJogadores.TabIndex = 10;
+            this.btnJogadores.Text = "Adicionar Jogador";
+            this.btnJogadores.UseVisualStyleBackColor = true;
+            this.btnJogadores.Click += new System.EventHandler(this.btnJogadores_Click);
             // 
             // label17
             // 
@@ -360,12 +357,28 @@
             this.label17.TabIndex = 29;
             this.label17.Text = "Nome do jogador";
             // 
-            // txtSenha2
+            // label16
             // 
-            this.txtSenha2.Location = new System.Drawing.Point(12, 102);
-            this.txtSenha2.Name = "txtSenha2";
-            this.txtSenha2.Size = new System.Drawing.Size(100, 20);
-            this.txtSenha2.TabIndex = 36;
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(9, 47);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(68, 13);
+            this.label16.TabIndex = 30;
+            this.label16.Text = "ID da partida";
+            // 
+            // txtNomeJogador
+            // 
+            this.txtNomeJogador.Location = new System.Drawing.Point(12, 24);
+            this.txtNomeJogador.Name = "txtNomeJogador";
+            this.txtNomeJogador.Size = new System.Drawing.Size(100, 20);
+            this.txtNomeJogador.TabIndex = 31;
+            // 
+            // txtIDPartida
+            // 
+            this.txtIDPartida.Location = new System.Drawing.Point(12, 63);
+            this.txtIDPartida.Name = "txtIDPartida";
+            this.txtIDPartida.Size = new System.Drawing.Size(100, 20);
+            this.txtIDPartida.TabIndex = 32;
             // 
             // label18
             // 
@@ -375,6 +388,13 @@
             this.label18.Size = new System.Drawing.Size(89, 13);
             this.label18.TabIndex = 34;
             this.label18.Text = "Senha da Partida";
+            // 
+            // txtSenha2
+            // 
+            this.txtSenha2.Location = new System.Drawing.Point(12, 102);
+            this.txtSenha2.Name = "txtSenha2";
+            this.txtSenha2.Size = new System.Drawing.Size(100, 20);
+            this.txtSenha2.TabIndex = 36;
             // 
             // lblIDJogador
             // 
@@ -421,26 +441,6 @@
             this.groupBox2.Size = new System.Drawing.Size(393, 135);
             this.groupBox2.TabIndex = 40;
             this.groupBox2.TabStop = false;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(394, 165);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(138, 15);
-            this.label19.TabIndex = 41;
-            this.label19.Text = "Adicionar Jogadores";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(394, 27);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(95, 15);
-            this.label21.TabIndex = 42;
-            this.label21.Text = "Criar Partidas";
             // 
             // Form1
             // 
@@ -490,7 +490,6 @@
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_criar_partida;
-        private System.Windows.Forms.Button btnJogadores;
         private System.Windows.Forms.Button btnSelecionarPartida;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label5;
@@ -509,18 +508,19 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtIDPartida;
-        private System.Windows.Forms.TextBox txtNomeJogador;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button btnJogadores;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtSenha2;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtNomeJogador;
+        private System.Windows.Forms.TextBox txtIDPartida;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtSenha2;
         private System.Windows.Forms.Label lblIDJogador;
         private System.Windows.Forms.Label lblSenhaJogador;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label21;
     }
 }
 
